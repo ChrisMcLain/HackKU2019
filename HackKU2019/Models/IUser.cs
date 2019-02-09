@@ -9,6 +9,7 @@ namespace HackKU2019.Models
         Platforms Platforms { get; set; }
         List<Followed> Following { get; set; }
         List<Tweet> Tweets { get; set; }
+        string Issues{get;set;}
 
         
     }
