@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Google.Cloud.Vision.V1;
 using HackKU2019.Models;
+using Tweetinvi.Core.Public.Models.Enum;
 
 namespace HackKU2019
 {
@@ -24,6 +25,19 @@ namespace HackKU2019
             return flags;
         }
 
+        private int CheckUserNaughtyImages(IUser user)
+        {
+            int flags = 0;
+            flags += MediaCheck(user.BannerPictureUrl);
+            flags += MediaCheck(user.ProfilePictureUrl);
+            foreach (var following in user.Following)
+            {
+                flags += MediaCheck(following.followingUserProfilePictureUrl);
+                flags += MediaCheck(following.followingUsersProfileBannerUrl);
+            }
+
+            return flags;
+        }
         private int CheckUserVulgarWords(IUser user)
         {
             int flags = 0;
