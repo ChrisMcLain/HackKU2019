@@ -11,10 +11,59 @@ namespace HackKU2019
         {
             int flags = 0;
             flags += TweetsCheck(content,user.UserID);
+            flags += UserCheck(user);
+            return flags;
+        }
+
+        private int UserCheck(IUser user)
+        {
+            int flags = 0;
+            flags += CheckUserVulgarWords(user);
+            flags += CheckUserNaughtyImages(user);
 
             return flags;
         }
 
+        private int CheckUserVulgarWords(IUser user)
+        {
+            int flags = 0;
+            
+            VulgarWordsList vulgarWordsList = new VulgarWordsList();
+            foreach (var word in vulgarWordsList.vulgarWords)
+            {
+                if (user.Name.ToLower().Contains(word.ToLower()))
+                {
+                    flags += 1;
+                }
+                if (user.Bio.ToLower().Contains(word.ToLower()))
+                {
+                    flags += 1;
+                }
+                if (user.UserID.ToLower().Contains(word.ToLower()))
+                {
+                    flags += 1;
+                }
+
+                
+                foreach (var followed in user.Following)
+                {
+                    if (followed.followingName.ToLower().Contains(word.ToLower()))
+                    {
+                        flags += 1;
+                    }
+                    if (followed.followingUserId.ToLower().Contains(word.ToLower()))
+                    {
+                        flags += 1;
+                    }
+                    if (followed.followingUserBio.ToLower().Contains(word.ToLower()))
+                    {
+                        flags += 1;
+                    }
+                }
+            }
+
+            return flags;
+        }
         private int TweetsCheck(IContent content,string IdInQuestion)
         {
             int flags = 0;
