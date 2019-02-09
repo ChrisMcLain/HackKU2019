@@ -55,7 +55,7 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/* Emma added pls send help */
+/* Emma added this stuff */
 .small_padding {
   height: 10px;
 }
@@ -118,13 +118,13 @@ body {
 }
 
 .red_cards {
-  background-color: red;
+  background-color: #ff4c4c;
 }
 
 .orange_cards {
-  background-color: orange;
+  background-color: #ffc04c;
 }
 
 .yellow_cards {
-  background-color: yellow;
+  background-color: #ffff4c;
 }
