@@ -19,7 +19,7 @@ namespace HackKU2019
 {
     public class GetTweets
     {
-        public void PullTweets(string handle)
+        public ResultsModel PullTweets(string handle)
         {
             Keys keys = new Keys();
             Auth.SetUserCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
@@ -42,9 +42,6 @@ namespace HackKU2019
                 }
 
                 //we will return this
-
-
-
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<Tweets> twitterContents = new List<Tweets>();
 
@@ -86,7 +83,15 @@ namespace HackKU2019
                     }, 
                     Tweets = twitterContents,Following = following
                 };
+
+                return new ResultsModel
+                {
+                    User = checkedUser,
+                    Tweets = twitterContents
+                };
             }
+
+            return null;
         }
 
         //Assuming they did not add the @ symbol adds it for them

@@ -12,6 +12,11 @@ namespace HackKU2019.Controllers
     {
         public IActionResult Index(string twitter = null, string facebook = null, string instagram = null)
         {
+            if (twitter != null)
+            {
+                return View(new GetTweets().PullTweets(twitter));
+            }
+            
             return View();
         }
 
