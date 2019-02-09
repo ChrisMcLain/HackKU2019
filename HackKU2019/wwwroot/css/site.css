@@ -81,3 +81,35 @@ body {
   font-size: 14px;
   min-height: 60px;
 }
+
+.background_twitter {
+  background-color: #00aced; 
+  opacity: 0.1;
+  height: 100px;
+  border-style: solid;
+  border-color: white;
+  border-width: 3px;
+}
+
+.background_instagram {
+  background-color: #8a3ab9;
+  opacity: 0.1;
+  height: 100px;
+  border-style: solid;
+  border-color: white;
+  border-width: 3px;
+}
+
+.background_facebook {
+  background-color: #3B5998;
+  opacity: 0.1;
+  height: 100px;
+  border-style: solid;
+  border-color: white;
+  border-width: 3px;
+}
+
+.results_content {
+  color: black;
+  opacity: 1; !important
+}
