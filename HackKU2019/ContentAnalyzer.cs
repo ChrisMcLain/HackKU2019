@@ -2,97 +2,58 @@ using System;
 using System.Collections.Generic;
 using Google.Cloud.Vision.V1;
 using HackKU2019.Models;
+using Remotion.Linq.Clauses;
 using Tweetinvi.Core.Public.Models.Enum;
 
 namespace HackKU2019
 {
     public class ContentAnalyzer
     {
-        public int AnalyzeContent(IContent content,IUser user)
+        public int AnalyzeContent(MainUser user)
         {
             int flags = 0;
-            flags += TweetsCheck(content,user.UserID);
-            flags += UserCheck(user);
+            flags += TweetsCheck(user.Tweets,user.userInfo.UserID);
+            flags += UserCheck(user.userInfo);
+            flags += CheckFollowing(user);
             return flags;
         }
 
-        private int UserCheck(IUser user)
+        private int CheckFollowing(MainUser user)
         {
             int flags = 0;
-            flags += CheckUserVulgarWords(user);
-            flags += CheckUserNaughtyImages(user);
-
-            return flags;
-        }
-
-        private int CheckUserNaughtyImages(IUser user)
-        {
-            int flags = 0;
-            flags += MediaCheck(user.BannerPictureUrl);
-            flags += MediaCheck(user.ProfilePictureUrl);
             foreach (var following in user.Following)
             {
-                flags += MediaCheck(following.followingUserProfilePictureUrl);
-                flags += MediaCheck(following.followingUsersProfileBannerUrl);
+                flags += CheckUser(following.UserInfo);
             }
 
             return flags;
         }
-        private int CheckUserVulgarWords(IUser user)
+        private int UserCheck(User user)
         {
             int flags = 0;
-            
-            VulgarWordsList vulgarWordsList = new VulgarWordsList();
-            foreach (var word in vulgarWordsList.vulgarWords)
-            {
-                if (user.Name.ToLower().Contains(word.ToLower()))
-                {
-                    flags += 1;
-                }
-                if (user.Bio.ToLower().Contains(word.ToLower()))
-                {
-                    flags += 1;
-                }
-                if (user.UserID.ToLower().Contains(word.ToLower()))
-                {
-                    flags += 1;
-                }
-                //checks all of the people the user is following for issues with their accounts
-                
-                foreach (var followed in user.Following)
-                {
-                    if (followed.followingName.ToLower().Contains(word.ToLower()))
-                    {
-                        flags += 1;
-                    }
-                    if (followed.followingUserId.ToLower().Contains(word.ToLower()))
-                    {
-                        flags += 1;
-                    }
-                    if (followed.followingUserBio.ToLower().Contains(word.ToLower()))
-                    {
-                        flags += 1;
-                    }
-                }
-            }
-
+            flags += CheckUser(user);
             return flags;
         }
-        private int TweetsCheck(IContent content,string IdInQuestion)
+        private int TweetsCheck(List<Tweet> content,string IdInQuestion)
         {
             int flags = 0;
-            flags += VulgarWordCheck(content.Text);
-            if (content.MediaUrls.Count > 0)
+            foreach (var tweet in content)
             {
-                foreach (var mediaUrl in content.MediaUrls)
-                {
-                    flags += MediaCheck(mediaUrl);
-                }
-            }
 
-            if (IdInQuestion != content.CreatorUserId)
-            {
-                CheckUser(content);
+
+                flags += VulgarWordCheck(tweet.Text);
+                if (tweet.MediaUrls.Count > 0)
+                {
+                    foreach (var mediaUrl in tweet.MediaUrls)
+                    {
+                        flags += MediaCheck(mediaUrl);
+                    }
+                }
+
+                if (IdInQuestion != tweet.UserCreateBy.UserID)
+                {
+                    CheckUser(tweet.UserCreateBy);
+                }
             }
 
             return flags;
@@ -135,35 +96,38 @@ namespace HackKU2019
         }
 
         //checks the creator of the tweets on timeline for issues with their accounts
-        private int CheckUser(IContent content)
+        private int CheckUser(User content)
         {
             int flags = 0;
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
 
             foreach (var word in vulgarWordsList.vulgarWords)
             {
-                if (content.CreatorUserName.ToLower().Contains(word.ToLower()))
+                if (content.Name.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
                 }
 
-                if (content.CreatorUserId.ToLower().Contains(word.ToLower()))
+                if (content.UserID.ToLower().Contains(word.ToLower()))
+                {
+                    flags += 1;
+                }
+                
+                if (content.Bio.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
                 }
             }
 
-            if (content.CreatorProfilePictureURL != null)
+            if (content.ProfilePictureUrl != null)
             {
-                flags += MediaCheck(content.CreatorProfilePictureURL);
+                flags += MediaCheck(content.ProfilePictureUrl);
             }
 
-            if (content.CreatorBackgroundPictureURL != null)
+            if (content.BannerPictureUrl != null)
             {
-                flags += MediaCheck(content.CreatorBackgroundPictureURL);
-
+                flags += MediaCheck(content.BannerPictureUrl);
             }
-
             return flags;
         }
     }

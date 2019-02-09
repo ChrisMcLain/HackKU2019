@@ -14,14 +14,22 @@ namespace HackKU2019.Models
         
     }
 
+    public class MainUser
+    {
+       public User userInfo { get; set; }
+       public Platforms Platforms { get; set; }
+       public List<Followed> Following { get; set; }
+       public List<Tweet> Tweets { get; set; }
+       public string Issues{get;set;}
+    }
     public class User
     {
-        string Name { get; set; }
-        string ProfilePictureUrl { get; set; }
+        public string Name { get; set; }
+        public string ProfilePictureUrl { get; set; }
         //this would be id or handle
-        string BannerPictureUrl { get; set; }
-        string UserID { get; set; }
-        string Bio { get; set; }
+        public string BannerPictureUrl { get; set; }
+        public string UserID { get; set; }
+        public string Bio { get; set; }
     }
 
     public class Followed
