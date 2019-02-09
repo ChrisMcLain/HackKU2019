@@ -14,6 +14,7 @@ using Tweetinvi.Models;
 using IUser = Tweetinvi.Models.IUser;
 using Tweet = Tweetinvi.Tweet;
 using User = Tweetinvi.User;
+using Google.Cloud.Translation.V2;
 
 namespace HackKU2019
 {
@@ -54,12 +55,13 @@ namespace HackKU2019
 
                 if (tweets != null)
                 {
-                    foreach (var tweet1 in tweets)
+                    foreach (var tweet in tweets)
                     {
+                        
                         List<string> mediaUrls = new List<string>();
                         try
                         {
-                            foreach (var media in tweet1.Media)
+                            foreach (var media in tweet.Media)
                             {
                                 //can't analyze videos using google cloud vision
                                 if (media.MediaType != MediaType.VideoMp4.ToString())
@@ -79,12 +81,12 @@ namespace HackKU2019
                         {
                             UserCreateBy = new Models.User
                             {
-                                UserId = tweet1.CreatedBy.UserIdentifier.ToString(),
-                                BannerPictureUrl = tweet1.CreatedBy.ProfileBannerURL,
-                                Bio = tweet1.CreatedBy.Description, Name = tweet1.CreatedBy.Name,
-                                ProfilePictureUrl = tweet1.CreatedBy.ProfileImageUrl
+                                UserId = tweet.CreatedBy.UserIdentifier.ToString(),
+                                BannerPictureUrl = tweet.CreatedBy.ProfileBannerURL,
+                                Bio = tweet.CreatedBy.Description, Name = tweet.CreatedBy.Name,
+                                ProfilePictureUrl = tweet.CreatedBy.ProfileImageUrl
                             },
-                            Text = tweet1.Text, Issue = ""
+                            Text = tweet.Text, Issue = ""
                         };
 
                         twitterContents.Add(thisTweet);
@@ -109,6 +111,13 @@ namespace HackKU2019
             }
 
             return null;
+        }
+
+        public string DetectLanguage(string tweetText)
+        {
+            TranslationClient client = TranslationClient.Create();
+            var detection = client.DetectLanguage(text: tweetText);
+            return detection.Language;
         }
 
         //Assuming they did not add the @ symbol adds it for them
