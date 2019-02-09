@@ -12,8 +12,8 @@ namespace HackKU2019
         public int AnalyzeContent(MainUser user)
         {
             int flags = 0;
-            TweetsCheck(user.Tweets,user.userInfo.UserID);
-            IssueFlagsReturnObj obj = CheckUser(user.userInfo);
+            TweetsCheck(user.Tweets,user.UserInfo.UserId);
+            IssueFlagsReturnObj obj = CheckUser(user.UserInfo);
             user.Issues += obj.Issue;
             user.TotalFlags += obj.Flags;
             //updates all following with issues
@@ -39,7 +39,7 @@ namespace HackKU2019
            flags += returnObj.Flags;
             return flags;
         }
-        private void TweetsCheck(List<Tweets> content,string IdInQuestion)
+        private void TweetsCheck(List<Tweets> content,string idInQuestion)
         {
             foreach (var tweet in content)
             {
@@ -58,7 +58,7 @@ namespace HackKU2019
                     }
                 }
 
-                if (IdInQuestion != tweet.UserCreateBy.UserID)
+                if (idInQuestion != tweet.UserCreateBy.UserId)
                 {
                     CheckUser(tweet.UserCreateBy);
                 }
@@ -71,7 +71,7 @@ namespace HackKU2019
             int flags = 0;
             string issues = "";
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
-            foreach (var word in vulgarWordsList.vulgarWords)
+            foreach (var word in vulgarWordsList.VulgarWords)
             {
                 if (text.ToLower().Contains(word.ToLower()))
                 {
@@ -94,7 +94,7 @@ namespace HackKU2019
 
             foreach (EntityAnnotation label in labels)
             {
-                foreach (var badWord in vulgarWordsList.vulgarWords)
+                foreach (var badWord in vulgarWordsList.VulgarWords)
                 {
                     if (label.Score > .5 && label.Description.ToLower().Contains(badWord.ToLower()))
                         flags++;
@@ -113,14 +113,14 @@ namespace HackKU2019
             string issues = "";
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
 
-            foreach (var word in vulgarWordsList.vulgarWords)
+            foreach (var word in vulgarWordsList.VulgarWords)
             {
                 if (content.Name.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
                 }
 
-                if (content.UserID.ToLower().Contains(word.ToLower()))
+                if (content.UserId.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
                 }

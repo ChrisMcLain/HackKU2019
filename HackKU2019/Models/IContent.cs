@@ -13,8 +13,8 @@ namespace HackKU2019.Models
          string AuthorName { get; set; }
          List<string> MediaUrls { get; set; }
          string CreatorUserName { get; set; }
-         string CreatorProfilePictureURL { get; set; }
-         string CreatorBackgroundPictureURL { get; set; }
+         string CreatorProfilePictureUrl { get; set; }
+         string CreatorBackgroundPictureUrl { get; set; }
 
          string CreatorBio { get; set; }
          string CreatorUserId { get; set; }

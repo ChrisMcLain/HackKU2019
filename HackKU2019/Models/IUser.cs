@@ -5,7 +5,7 @@ namespace HackKU2019.Models
 {
     public class MainUser
     {
-       public User userInfo { get; set; }
+       public User UserInfo { get; set; }
        public Platforms Platforms { get; set; }
        public List<Followed> Following { get; set; }
        public List<Tweets> Tweets { get; set; }
@@ -18,7 +18,7 @@ namespace HackKU2019.Models
         public string ProfilePictureUrl { get; set; }
         //this would be id or handle
         public string BannerPictureUrl { get; set; }
-        public string UserID { get; set; }
+        public string UserId { get; set; }
         public string Bio { get; set; }
     }
 

@@ -10,7 +10,7 @@ namespace HackKU2019.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string twitter = null, string facebook = null, string instagram = null)
         {
             return View();
         }
