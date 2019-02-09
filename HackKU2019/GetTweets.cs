@@ -31,7 +31,7 @@ namespace HackKU2019
                         foreach (var media in tweet.Media)
                         {
                             //can't analyze videos using google cloud vision
-                            if (media.MediaType!=MediaType.VideoMp4.ToString())
+                            if (media.MediaType != MediaType.VideoMp4.ToString())
                             {
                                 mediaUrls.Add(media.MediaURL);
                             }
@@ -41,8 +41,13 @@ namespace HackKU2019
                     {
                         Console.WriteLine(e);
                     }
+
                     TwitterContent twitterContent = new TwitterContent
-                        {Text = tweet.Text, AuthorName = tweet.CreatedBy.Name,MediaUrls = mediaUrls};
+                    {
+                        TargetUsername = handle.Substring(1),
+                        Text = tweet.Text, AuthorName = tweet.CreatedBy.Name, MediaUrls = mediaUrls,
+                        Platform = Platforms.Twitter, CreatorUserName = tweet.CreatedBy.Name, C
+                    };
 
                     twitterContents.Add(twitterContent);
                 }
@@ -58,6 +63,7 @@ namespace HackKU2019
 
             return handle;
         }
+
         public bool checkUserExists(string handle)
         {
             var user = User.GetUserFromScreenName(handle);
