@@ -4,9 +4,10 @@ namespace HackKU2019
 {
     public class VulgarWordsList
     {
+        //The list of vulgar words to check for in a post
         public string[] vulgarWords =  new []
         {
-            "kitten","kitty","cat"
+            "kitten","kitty", "kittie",
         };
     }
 }

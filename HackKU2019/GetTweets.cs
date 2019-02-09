@@ -34,6 +34,7 @@ namespace HackKU2019
                             //can't analyze videos using google cloud vision
                             if (media.MediaType != MediaType.VideoMp4.ToString())
                             {
+                                //Adds the links of all tweets images
                                 mediaUrls.Add(media.MediaURL);
                             }
                         }
@@ -43,6 +44,7 @@ namespace HackKU2019
                         Console.WriteLine(e);
                     }
 
+                    //Adds tweets to list from above
                     TwitterContent twitterContent = new TwitterContent
                     {
                         TargetUsername = handle.Substring(1),
@@ -58,6 +60,7 @@ namespace HackKU2019
             }
         }
 
+        //Assuming they did not add the @ symbol adds it for them
         public String formatHandle(string handle)
         {
             if (handle[0] != '@')
@@ -68,6 +71,7 @@ namespace HackKU2019
             return handle;
         }
 
+        //Checks if a user exits by checking if the return for their name is null
         public bool checkUserExists(string handle)
         {
             var user = User.GetUserFromScreenName(handle);

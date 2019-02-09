@@ -23,6 +23,7 @@ namespace HackKU2019
             return flags;
         }
 
+        //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
         private int vulgarWordCheck(string text)
         {
             int vulgarWords = 0;
@@ -38,6 +39,7 @@ namespace HackKU2019
             return vulgarWords;
         }
 
+        //Uses google cloud vision to analyze an image from a post or profile picture for a trigger word
         private int mediaCheck(string url)
         {
             Image image = Image.FromUri(url);
