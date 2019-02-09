@@ -33,6 +33,7 @@ namespace HackKU2019.Models
     public class Tweet
     {
         public string Text{ get; set; }
+        public List<string> MediaUrls { get; set; }
         public User UserCreateBy{ get; set; }
         public string Issue{ get; set; }
 

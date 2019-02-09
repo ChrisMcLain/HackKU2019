@@ -20,13 +20,10 @@ namespace HackKU2019.Models
 
     public class TwitterUser : IUser
     {
-        public string Name { get; set; }
-        public string ProfilePictureUrl { get; set; }
-        public string UserID { get; set; }
-        public string Bio { get; set; }
-        public string BannerPictureUrl { get; set; }
+        public User userInfo { get; set; }
         public Platforms Platforms { get; set; }
         public List<Followed> Following { get; set; }
+        public List<Tweet> Tweets { get; set; }
     }
 
 }
