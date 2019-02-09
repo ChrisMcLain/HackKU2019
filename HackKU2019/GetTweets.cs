@@ -22,8 +22,19 @@ namespace HackKU2019
             formatHandle(handle);
             if (checkUserExists(handle))
             {
+                List<string> followingNames = new List<string>();
+                List<string> followingUsersBios=new List<string>();
+                List<string> followingUsersProfPics=new List<string>();
+                List<string> followingUsersBannerPics=new List<string>();
+                List<string> followingUsersIds=new List<string>();
+                var user = User.GetUserFromScreenName(handle);
+                foreach (var VARIABLE in temp)
+                {
+                    
+                }
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
+                
                 foreach (var tweet in tweets)
                 {
                     List<string> mediaUrls = new List<string>();
@@ -59,6 +70,7 @@ namespace HackKU2019
                     };
 
                     twitterContents.Add(twitterContent);
+
                 }
             }
         }
@@ -80,5 +92,7 @@ namespace HackKU2019
             var user = User.GetUserFromScreenName(handle);
             return user != null;
         }
+        
+        
     }
 }
