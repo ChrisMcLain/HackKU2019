@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace HackKU2019.Models
 {
     public class TwitterContent : IContent
@@ -5,6 +7,7 @@ namespace HackKU2019.Models
         public string Text { get; set; }
         public string AuthorName { get; set; }
         
+        public List<string> MediaUrls { get; set; }
     }
 
     public class TwitterUser : IUser

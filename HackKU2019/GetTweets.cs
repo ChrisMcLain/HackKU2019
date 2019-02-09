@@ -7,6 +7,7 @@ using HackKU2019.Models;
 using Microsoft.AspNetCore.Mvc;
 using Remotion.Linq.Clauses;
 using Tweetinvi;
+using Tweetinvi.Core.Public.Models.Enum;
 using Tweetinvi.Models;
 
 namespace HackKU2019
@@ -24,8 +25,25 @@ namespace HackKU2019
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
                 foreach (var tweet in tweets)
                 {
+                    List<string> mediaUrls = new List<string>();
+                    try
+                    {
+                        foreach (var media in tweet.Media)
+                        {
+                            //can't analyze videos using google cloud vision
+                            if (media.MediaType!=MediaType.VideoMp4.ToString())
+                            {
+                                mediaUrls.Add(media.MediaURL);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                     TwitterContent twitterContent = new TwitterContent
-                        {Text = tweet.Text, AuthorName = tweet.CreatedBy.Name};
+                        {Text = tweet.Text, AuthorName = tweet.CreatedBy.Name,MediaUrls = mediaUrls};
+
                     twitterContents.Add(twitterContent);
                 }
             }
