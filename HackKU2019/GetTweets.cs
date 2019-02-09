@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Google.Cloud.Vision.V1;
 using HackKU2019.Models;
 using Microsoft.AspNetCore.Mvc;
 using Remotion.Linq.Clauses;
@@ -45,8 +46,11 @@ namespace HackKU2019
                     TwitterContent twitterContent = new TwitterContent
                     {
                         TargetUsername = handle.Substring(1),
-                        Text = tweet.Text, AuthorName = tweet.CreatedBy.Name, MediaUrls = mediaUrls,
-                        Platform = Platforms.Twitter, CreatorUserName = tweet.CreatedBy.Name,
+                        Text = tweet.Text,
+                        AuthorName = tweet.CreatedBy.Name,
+                        MediaUrls = mediaUrls,
+                        Platform = Platforms.Twitter,
+                        CreatorUserName = tweet.CreatedBy.Name,
                     };
 
                     twitterContents.Add(twitterContent);

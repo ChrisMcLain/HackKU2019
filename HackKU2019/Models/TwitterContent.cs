@@ -22,4 +22,5 @@ namespace HackKU2019.Models
         public string UserID { get; set; }
         public Platforms Platforms { get; set; }
     }
+
 }
