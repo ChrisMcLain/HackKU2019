@@ -97,22 +97,6 @@ body {
     padding: 10px;
 }
 
-.background_instagram {
-    background-color: #f3ebf8;
-    border-style: solid;
-    border-color: white;
-    border-width: 3px;
-    padding: 10px;
-}
-
-.background_facebook {
-    background-color: #ebeef4;
-    border-style: solid;
-    border-color: white;
-    border-width: 3px;
-    padding: 10px;
-}
-
 .results_content {
     color: black;
     opacity: 1;
@@ -128,6 +112,26 @@ body {
 
 .yellow_cards {
     background-color: #ffff4c;
+}
+
+.issue_container {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px;
+}
+
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-right: 100px solid #ff4c4c;
+}
+
+.issue {
+    background-color: #ff4c4c;
+    padding: 10px;
+    width: 100%;
 }
 
 /* Bootstrap that I override below */
