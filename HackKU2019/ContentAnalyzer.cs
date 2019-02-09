@@ -12,41 +12,49 @@ namespace HackKU2019
         public int AnalyzeContent(MainUser user)
         {
             int flags = 0;
-            flags += TweetsCheck(user.Tweets,user.userInfo.UserID);
-            flags += UserCheck(user.userInfo);
-            flags += CheckFollowing(user);
+            TweetsCheck(user.Tweets,user.userInfo.UserID);
+            IssueFlagsReturnObj obj = CheckUser(user.userInfo);
+            user.Issues += obj.Issue;
+            user.TotalFlags += obj.Flags;
+            //updates all following with issues
+               
+            CheckFollowing(user);
             return flags;
         }
 
-        private int CheckFollowing(MainUser user)
+        private void CheckFollowing(MainUser user)
         {
-            int flags = 0;
             foreach (var following in user.Following)
             {
-                flags += CheckUser(following.UserInfo);
+                 IssueFlagsReturnObj obj= CheckUser(following.UserInfo);
+                 following.TotalFlags += obj.Flags;
+                 following.Issue += obj.Issue;
             }
 
-            return flags;
         }
         private int UserCheck(User user)
         {
             int flags = 0;
-            flags += CheckUser(user);
+           IssueFlagsReturnObj returnObj=CheckUser(user);
+           flags += returnObj.Flags;
             return flags;
         }
-        private int TweetsCheck(List<Tweet> content,string IdInQuestion)
+        private void TweetsCheck(List<Tweets> content,string IdInQuestion)
         {
-            int flags = 0;
             foreach (var tweet in content)
             {
 
+                IssueFlagsReturnObj returnObj =VulgarWordCheck(tweet.Text);
+                tweet.TotalFlags += returnObj.Flags;
+                tweet.Issue += returnObj.Issue;
 
-                flags += VulgarWordCheck(tweet.Text);
                 if (tweet.MediaUrls.Count > 0)
                 {
                     foreach (var mediaUrl in tweet.MediaUrls)
                     {
-                        flags += MediaCheck(mediaUrl);
+                        IssueFlagsReturnObj obj = MediaCheck(mediaUrl);
+                        tweet.TotalFlags += obj.Flags;
+                        tweet.Issue += obj.Issue;
                     }
                 }
 
@@ -56,31 +64,32 @@ namespace HackKU2019
                 }
             }
 
-            return flags;
         }
         //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
-        private int VulgarWordCheck(string text)
-        {
-            int vulgarWords = 0;
+        private IssueFlagsReturnObj VulgarWordCheck(string text)
+        {   
+            int flags = 0;
+            string issues = "";
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
             foreach (var word in vulgarWordsList.vulgarWords)
             {
                 if (text.ToLower().Contains(word.ToLower()))
                 {
-                    vulgarWords += 1;
+                    flags += 1;
                 }
             }
 
-            return vulgarWords;
-        }
+            IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
+            return returnObj;        }
 
         //Uses google cloud vision to analyze an image from a post or profile picture for a trigger word
-        private int MediaCheck(string url)
+        private IssueFlagsReturnObj MediaCheck(string url)
         {
+            int flags = 0;
+            string issues = "";
             Image image = Image.FromUri(url);
             ImageAnnotatorClient client = ImageAnnotatorClient.Create();
             IReadOnlyList<EntityAnnotation> labels = client.DetectLabels(image);
-            int mediaFlags = 0;
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
 
             foreach (EntityAnnotation label in labels)
@@ -88,17 +97,20 @@ namespace HackKU2019
                 foreach (var badWord in vulgarWordsList.vulgarWords)
                 {
                     if (label.Score > .5 && label.Description.ToLower().Contains(badWord.ToLower()))
-                        mediaFlags++;
+                        flags++;
                 }
             }
 
-            return mediaFlags;
+            IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
+            return returnObj;
+            
         }
 
         //checks the creator of the tweets on timeline for issues with their accounts
-        private int CheckUser(User content)
+        private IssueFlagsReturnObj CheckUser(User content)
         {
             int flags = 0;
+            string issues = "";
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
 
             foreach (var word in vulgarWordsList.vulgarWords)
@@ -121,14 +133,26 @@ namespace HackKU2019
 
             if (content.ProfilePictureUrl != null)
             {
-                flags += MediaCheck(content.ProfilePictureUrl);
+                IssueFlagsReturnObj obj= MediaCheck(content.ProfilePictureUrl);
+                flags += obj.Flags;
+                issues += obj.Issue;
+
             }
 
             if (content.BannerPictureUrl != null)
             {
-                flags += MediaCheck(content.BannerPictureUrl);
-            }
-            return flags;
+                IssueFlagsReturnObj obj= MediaCheck(content.BannerPictureUrl);
+                flags += obj.Flags;
+                issues += obj.Issue;            }
+
+            IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
+            return returnObj;
         }
+    }
+
+    class IssueFlagsReturnObj
+    {
+        public int Flags { get; set; }
+        public string Issue { get; set; }
     }
 }

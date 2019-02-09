@@ -12,6 +12,8 @@ using Tweetinvi;
 using Tweetinvi.Core.Public.Models.Enum;
 using Tweetinvi.Models;
 using IUser = Tweetinvi.Models.IUser;
+using Tweet = Tweetinvi.Tweet;
+using User = Tweetinvi.User;
 
 namespace HackKU2019
 {
@@ -30,32 +32,27 @@ namespace HackKU2019
                 {
                     Followed followedObj = new Followed
                     {
-                        followingName = followed.Name, followingUserBio = followed.Description,
-                        followingUserProfilePictureUrl = followed.ProfileImageUrl,
-                        followingUserId = followed.UserIdentifier.ToString(),
-                        followingUsersProfileBannerUrl = followed.Description
+                      UserInfo = new Models.User
+                      {
+                          BannerPictureUrl = followed.ProfileBannerURL,Bio = followed.Description,Name=followed.Name,ProfilePictureUrl = followed.ProfileImageUrl,UserID = followed.UserIdentifier.ToString()
+                      },Issue = ""
                     };
                     following.Add(followedObj);
                 }
 
                 //we will return this
-                TwitterUser checkedUser = new TwitterUser
-                {
-                    Name = user.Name, UserID = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,
-                    ProfilePictureUrl = user.ProfileImageUrl, Following = following, Platforms = Platforms.Twitter,
-                    Bio = user.Description
-                };
+
 
 
                 var tweets = Timeline.GetUserTimeline(handle);
-                List<TwitterContent> twitterContents = new List<TwitterContent>();
+                List<Tweets> twitterContents = new List<Tweets>();
 
-                foreach (var tweet in tweets)
+                foreach (var tweet1 in tweets)
                 {
                     List<string> mediaUrls = new List<string>();
                     try
                     {
-                        foreach (var media in tweet.Media)
+                        foreach (var media in tweet1.Media)
                         {
                             //can't analyze videos using google cloud vision
                             if (media.MediaType != MediaType.VideoMp4.ToString())
@@ -71,23 +68,23 @@ namespace HackKU2019
                     }
 
                     //Adds tweets to list from above
-                    TwitterContent twitterContent = new TwitterContent
+                    var thisTweet = new Tweets
                     {
-                        TargetUsername = handle.Substring(1),
-                        Text = tweet.Text,
-                        AuthorName = tweet.CreatedBy.Name,
-                        MediaUrls = mediaUrls,
-                        Platform = Platforms.Twitter,
-                        CreatorUserName = tweet.CreatedBy.Name,
-                        CreatorBio = tweet.CreatedBy.Description,
-                        CreatorBackgroundPictureURL = tweet.CreatedBy.ProfileBannerURL,
-                        CreatorUserId = tweet.CreatedBy.UserIdentifier.ToString()
+                        UserCreateBy = new Models.User { UserID = tweet1.CreatedBy.UserIdentifier.ToString(),BannerPictureUrl =tweet1.CreatedBy.ProfileBannerURL,Bio = tweet1.CreatedBy.Description,Name = tweet1.CreatedBy.Name,ProfilePictureUrl = tweet1.CreatedBy.ProfileImageUrl}, Text = tweet1.Text, Issue = ""
                     };
 
-                    twitterContents.Add(twitterContent);
+                    twitterContents.Add(thisTweet);
                 }
 
                 //We will return twitter contents here along with the user class from above to be analyzed
+                MainUser checkedUser = new MainUser
+                {
+                    userInfo = new Models.User
+                    {
+                        UserID = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,Bio=user.Description,Name=user.Name,ProfilePictureUrl = user.ProfileImageUrl
+                    }, 
+                    Tweets = twitterContents,Following = following
+                };
             }
         }
 

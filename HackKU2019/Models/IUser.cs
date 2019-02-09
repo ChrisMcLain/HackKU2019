@@ -3,15 +3,14 @@ using InstaSharp.Endpoints;
 
 namespace HackKU2019.Models
 {
-
-
     public class MainUser
     {
        public User userInfo { get; set; }
        public Platforms Platforms { get; set; }
        public List<Followed> Following { get; set; }
-       public List<Tweet> Tweets { get; set; }
+       public List<Tweets> Tweets { get; set; }
        public string Issues{get;set;}
+       public int TotalFlags { get; set; }
     }
     public class User
     {
@@ -27,15 +26,19 @@ namespace HackKU2019.Models
     {
         public User UserInfo{ get; set; }
         public string Issue{ get; set; }
+        public int TotalFlags { get; set; }
+
 
 
     }
-    public class Tweet
+    public class Tweets
     {
         public string Text{ get; set; }
         public List<string> MediaUrls { get; set; }
         public User UserCreateBy{ get; set; }
         public string Issue{ get; set; }
+        public int TotalFlags { get; set; }
+
 
     }
 }
