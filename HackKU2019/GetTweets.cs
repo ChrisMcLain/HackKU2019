@@ -17,15 +17,33 @@ namespace HackKU2019
         {
             Keys keys = new Keys();
             Auth.SetUserCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
-            var tweets = Timeline.GetUserTimeline(handle);
-            List<TwitterContent> twitterContents = new List<TwitterContent>();
-            foreach (var tweet in tweets)
+            formatHandle(handle);
+            if (checkUserExists(handle))
             {
-                TwitterContent twitterContent = new TwitterContent
-                    {Text = tweet.Text, AuthorName = tweet.CreatedBy.Name};
-                twitterContents.Add(twitterContent);
+                var tweets = Timeline.GetUserTimeline(handle);
+                List<TwitterContent> twitterContents = new List<TwitterContent>();
+                foreach (var tweet in tweets)
+                {
+                    TwitterContent twitterContent = new TwitterContent
+                        {Text = tweet.Text, AuthorName = tweet.CreatedBy.Name};
+                    twitterContents.Add(twitterContent);
+                }
+            }
+        }
+
+        public String formatHandle(string handle)
+        {
+            if (handle[0] != '@')
+            {
+                handle = handle.Insert(0, "@");
             }
 
+            return handle;
+        }
+        public bool checkUserExists(string handle)
+        {
+            var user = User.GetUserFromScreenName(handle);
+            return user != null;
         }
     }
 }
