@@ -57,7 +57,7 @@ namespace HackKU2019
                 {
                     flags += 1;
                 }
-
+                //checks all of the people the user is following for issues with their accounts
                 
                 foreach (var followed in user.Following)
                 {
@@ -134,6 +134,7 @@ namespace HackKU2019
             return mediaFlags;
         }
 
+        //checks the creator of the tweets on timeline for issues with their accounts
         private int CheckUser(IContent content)
         {
             int flags = 0;
