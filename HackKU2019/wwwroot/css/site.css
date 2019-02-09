@@ -135,12 +135,12 @@ body {
 /* Bootstrap that I override below */
 @media (min-width: 576px) {
     .jumbotron {
-        padding: 1.5rem 1rem !important;
+        padding: 1.5rem 1.5rem !important;
         margin-bottom: 0rem !important;
     }
 }
 
 .jumbotron {
-    padding: 1.5rem 1rem !important; 
+    padding: 1.5rem 1.5rem !important; 
     margin-bottom: 0rem !important;
 }
