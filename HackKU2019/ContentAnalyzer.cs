@@ -7,19 +7,23 @@ namespace HackKU2019
 {
     public class ContentAnalyzer
     {
-        public int AnalyzeContent(IContent content)
+        public int AnalyzeContent(IContent content,string handleInQuestion)
         {
             int flags = 0;
-            flags += vulgarWordCheck(content.Text);
+            flags += VulgarWordCheck(content.Text);
             if (content.MediaUrls.Count > 0)
             {
                 foreach (var mediaUrl in content.MediaUrls)
                 {
-                    flags += mediaCheck(mediaUrl);
+                    flags += MediaCheck(mediaUrl);
                 }
             }
 
-            checkUser(content);
+            if (handleInQuestion != content.CreatorUserId)
+            {
+                CheckUser(content);
+            }
+
             return flags;
         }
 
@@ -80,12 +84,12 @@ namespace HackKU2019
 
             if (content.CreatorProfilePictureURL != null)
             {
-                flags += mediaCheck(content.CreatorProfilePictureURL);
+                flags += MediaCheck(content.CreatorProfilePictureURL);
             }
 
             if (content.CreatorBackgroundPictureURL != null)
             {
-                flags += mediaCheck(content.CreatorBackgroundPictureURL);
+                flags += MediaCheck(content.CreatorBackgroundPictureURL);
 
             }
 
