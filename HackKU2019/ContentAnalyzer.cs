@@ -7,7 +7,15 @@ namespace HackKU2019
 {
     public class ContentAnalyzer
     {
-        public int AnalyzeContent(IContent content,string handleInQuestion)
+        public int AnalyzeContent(IContent content,IUser user)
+        {
+            int flags = 0;
+            flags += TweetsCheck(content,user.UserID);
+
+            return flags;
+        }
+
+        private int TweetsCheck(IContent content,string IdInQuestion)
         {
             int flags = 0;
             flags += VulgarWordCheck(content.Text);
@@ -19,14 +27,13 @@ namespace HackKU2019
                 }
             }
 
-            if (handleInQuestion != content.CreatorUserId)
+            if (IdInQuestion != content.CreatorUserId)
             {
                 CheckUser(content);
             }
 
             return flags;
         }
-
         //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
         private int VulgarWordCheck(string text)
         {

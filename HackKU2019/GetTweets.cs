@@ -40,11 +40,14 @@ namespace HackKU2019
                     following.Add(followedObj);
                 }
 
+                //we will return this
                 TwitterUser checkedUser = new TwitterUser
                 {
                     Name = user.Name, UserID = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,
                     ProfilePictureUrl = user.ProfileImageUrl, Following = following, Platforms = Platforms.Twitter,Bio = user.Description
                 };
+                
+                
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
                 
@@ -85,6 +88,7 @@ namespace HackKU2019
                     twitterContents.Add(twitterContent);
 
                 }
+                //We will return twitter contents here along with the user class from above to be analyzed
             }
         }
 
