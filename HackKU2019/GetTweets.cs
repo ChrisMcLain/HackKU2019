@@ -22,20 +22,21 @@ namespace HackKU2019
             formatHandle(handle);
             if (checkUserExists(handle))
             {
-                List<string> followingNames = new List<string>();
-                List<string> followingUsersBios=new List<string>();
-                List<string> followingUsersProfPics=new List<string>();
-                List<string> followingUsersBannerPics=new List<string>();
-                List<string> followingUsersIds=new List<string>();
+
                 var user = User.GetUserFromScreenName(handle);
-                foreach (var following in user.Friends)
+                List<Followed> following = new List<Followed>();
+                foreach (var followed in user.Friends)
                 {
-                    followingNames.Add(following.Name);
-                    followingUsersBios.Add(following.Description);
-                    followingUsersProfPics.Add(following.ProfileImageUrl);
-                    followingUsersBannerPics.Add(following.ProfileBannerURL);
-                    followingUsersIds.Add(following.UserIdentifier.ToString());
+                    Followed followedObj = new Followed
+                    {
+                        followingName = followed.Name, followingUserBio = followed.Description,
+                        followingUserProfilePictureUrl = followed.ProfileImageUrl,
+                        followingUserId = followed.UserIdentifier.ToString(),
+                        followingUsersProfileBannerUrl = followed.Description
+                    };
+                    following.Add(followedObj);
                 }
+
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
                 

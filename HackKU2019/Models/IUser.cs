@@ -9,14 +9,17 @@ namespace HackKU2019.Models
         //this would be id or handle
         string UserID { get; set; }
         Platforms Platforms { get; set; }
-        List<string> followingUsersNames { get; set; }
-        List<string> followingUsersBios { get; set; }
-        List<string> followingUsersId { get; set; }
-        List<string> followingUsersProfilePictureUrl { get; set; }
-        List<string> followingUsersProfileBannerUrl { get; set; }
+        List<Followed> Following { get; set; }
 
+    }
 
-
+    public class Followed
+    {
+        public string followingName { get; set; }
+        public string followingUserId { get; set; }
+        public string followingUserBio { get; set; }
+        public string followingUserProfilePictureUrl { get; set; }
+        public string followingUsersProfileBannerUrl { get; set; }
 
     }
 }
