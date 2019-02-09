@@ -11,13 +11,17 @@ namespace HackKU2019
     {
         IAuthenticatedUser getUser()
         {
-            var userCredentials = Auth.CreateCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
+            Keys keys = new Keys();
+            var userCredentials = Auth.CreateCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
             return User.GetAuthenticatedUser(userCredentials);
         }
         
-        public async void pullTweets()
+        public void pullTweets(string handle)
         {
             var authUser = getUser();
+            var tweets = Timeline.GetUserTimeline("bracciata");
+            Console.WriteLine(tweets);
+
         }
     }
 }
