@@ -16,13 +16,11 @@ namespace HackKU2019
                 foreach (var mediaUrl in content.MediaUrls)
                 {
                     flags += mediaCheck(mediaUrl);
-
                 }
             }
 
-            checkUser();
+            checkUser(content);
             return flags;
-            
         }
 
         //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
@@ -58,12 +56,24 @@ namespace HackKU2019
                         mediaFlags++;
                 }
             }
+
             return mediaFlags;
         }
 
-        private int checkUser()
+        private int checkUser(IContent content)
         {
-            
+            int flags = 0;
+            VulgarWordsList vulgarWordsList = new VulgarWordsList();
+
+            foreach (var word in vulgarWordsList.vulgarWords)
+            {
+                if (content.AuthorName.ToLower().Contains(word))
+                {
+                    flags += 1;
+                }
+            }
+
+            return flags;
         }
     }
 }
