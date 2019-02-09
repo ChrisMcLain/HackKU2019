@@ -57,7 +57,11 @@ namespace HackKU2019
                 {
                     foreach (var tweet in tweets)
                     {
-                        
+                        string languageOfTweet = DetectLanguage(tweet.Text);
+                        if (languageOfTweet != "en")
+                        {
+                            tweet.Text = TranslateText(languageOfTweet, tweet.Text);
+                        }
                         List<string> mediaUrls = new List<string>();
                         try
                         {
@@ -112,8 +116,16 @@ namespace HackKU2019
 
             return null;
         }
-
-        public string DetectLanguage(string tweetText)
+        private string TranslateText(string detectedLanguage,string tweetText)
+        {
+            TranslationClient client = TranslationClient.Create();
+            var response = client.TranslateText(
+                text: tweetText,
+                targetLanguage: "en",  // Russian
+                sourceLanguage: detectedLanguage);  // English
+            return response.TranslatedText;
+        }
+        private string DetectLanguage(string tweetText)
         {
             TranslationClient client = TranslationClient.Create();
             var detection = client.DetectLanguage(text: tweetText);
