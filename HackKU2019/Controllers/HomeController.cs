@@ -15,7 +15,8 @@ namespace HackKU2019.Controllers
             if (twitter != null)
             {
                 var model = new GetTweets().PullTweets(twitter);
-                new ContentAnalyzer().AnalyzeContent(model.User);
+                var analyzer = new ContentAnalyzer();
+                analyzer.AnalyzeContent(model.User);
                 return View(model);
             }
             

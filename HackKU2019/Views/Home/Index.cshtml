@@ -81,13 +81,23 @@
 <div class="row">
     @if (Model != null)
     {
+        var userColor = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
         <div class="col-4 background_twitter">
-            <div class="card">
+            <div class="card @(userColor)_cards">
+                <img class="card-img-top" src="@Model.User.UserInfo.ProfilePictureUrl" alt="Profile Picture"/>
+                <img class="card-img-top" src="@Model.User.UserInfo.BannerPictureUrl" alt="Banner Picture"/>
                 <div class="card-body">
-                    @Model.User.TotalFlags
+                    <p class="card-text">
+                        <strong>@Model.User.UserInfo.Name's Profile</strong>
+                        <br/>
+                        @Model.User.UserInfo.Bio
+                        <hr/>
+                        <strong>@Model.User.TotalFlags Potential Issue@(Model.User.TotalFlags > 1 ? "s" : "")</strong>
+                        <br/>
+                        <em>@Model.User.Issues</em>
+                    </p>
                 </div>
             </div>
-            
             @foreach (var tweet in Model.User.Tweets)
             {
                 var color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
@@ -95,14 +105,20 @@
                 {
                     <div class="small_padding"></div>
                     <div class="card @(color)_cards">
+                        @foreach (var media in tweet.MediaUrls)
+                        {
+                            <img class="card-img-top" src="@media" alt="@tweet.Issue"/>
+                        }
                         <div class="card-body">
-                            <strong>@tweet.TotalFlags Flags</strong>
-                            <br/>
-                            <em>@tweet.Issue</em>
-                            <hr/>
-                            <strong>Tweet Content</strong>
-                            <br/>
-                            @tweet.Text
+                            <p class="card-text">
+                                <strong>Tweet Content</strong>
+                                <br/>
+                                @tweet.Text
+                                <hr/>
+                                <strong>@tweet.TotalFlags Potential Issue@(tweet.TotalFlags > 1 ? "s" : "")</strong>
+                                <br/>
+                                <em>@tweet.Issue</em>
+                            </p>
                         </div>
                     </div>
                 }

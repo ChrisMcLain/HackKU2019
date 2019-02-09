@@ -6,6 +6,7 @@ using System.Net.Http;
 using Google.Cloud.Vision.V1;
 using HackKU2019.Models;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Math.EC;
 using Remotion.Linq.Clauses;
 using Tweetinvi;
@@ -56,7 +57,7 @@ namespace HackKU2019
                 {
                     foreach (var tweet1 in tweets)
                     {
-                        List<string> mediaUrls = new List<string>();
+                        var mediaUrls = new List<string>();
                         try
                         {
                             foreach (var media in tweet1.Media)
@@ -84,7 +85,8 @@ namespace HackKU2019
                                 Bio = tweet1.CreatedBy.Description, Name = tweet1.CreatedBy.Name,
                                 ProfilePictureUrl = tweet1.CreatedBy.ProfileImageUrl
                             },
-                            Text = tweet1.Text, Issue = ""
+                            Text = tweet1.Text, Issue = "",
+                            MediaUrls = mediaUrls
                         };
 
                         twitterContents.Add(thisTweet);

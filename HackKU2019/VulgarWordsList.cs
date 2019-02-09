@@ -7,7 +7,7 @@ namespace HackKU2019
         //The list of vulgar words to check for in a post
         public string[] VulgarWords =  new []
         {
-            "kitten", "kitty", "kittie",
+            "kitten", "kitty", "kitties",
         };
     }
 }
