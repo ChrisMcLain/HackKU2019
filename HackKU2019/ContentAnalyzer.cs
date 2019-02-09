@@ -11,7 +11,7 @@ namespace HackKU2019
             return flags;
         }
 
-        public int vulgarWordCheck(string text)
+        private int vulgarWordCheck(string text)
         {
             int vulgarWords = 0;
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
@@ -23,6 +23,11 @@ namespace HackKU2019
                 }
             }
             return vulgarWords;
+        }
+
+        private int mediaCheck()
+        {
+            return 0;
         }
     }
 }
