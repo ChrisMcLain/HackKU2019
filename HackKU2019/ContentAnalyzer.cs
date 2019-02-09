@@ -61,17 +61,22 @@ namespace HackKU2019
                 
                 foreach (var followed in user.Following)
                 {
-                    if (followed.followingName.ToLower().Contains(word.ToLower()))
+                    if (followed.followingUserId != user.UserID)
                     {
-                        flags += 1;
-                    }
-                    if (followed.followingUserId.ToLower().Contains(word.ToLower()))
-                    {
-                        flags += 1;
-                    }
-                    if (followed.followingUserBio.ToLower().Contains(word.ToLower()))
-                    {
-                        flags += 1;
+                        if (followed.followingName.ToLower().Contains(word.ToLower()))
+                        {
+                            flags += 1;
+                        }
+
+                        if (followed.followingUserId.ToLower().Contains(word.ToLower()))
+                        {
+                            flags += 1;
+                        }
+
+                        if (followed.followingUserBio.ToLower().Contains(word.ToLower()))
+                        {
+                            flags += 1;
+                        }
                     }
                 }
             }
@@ -88,11 +93,6 @@ namespace HackKU2019
                 {
                     flags += MediaCheck(mediaUrl);
                 }
-            }
-
-            if (IdInQuestion != content.CreatorUserId)
-            {
-                CheckUser(content);
             }
 
             return flags;
@@ -134,36 +134,5 @@ namespace HackKU2019
             return mediaFlags;
         }
 
-        private int CheckUser(IContent content)
-        {
-            int flags = 0;
-            VulgarWordsList vulgarWordsList = new VulgarWordsList();
-
-            foreach (var word in vulgarWordsList.vulgarWords)
-            {
-                if (content.CreatorUserName.ToLower().Contains(word.ToLower()))
-                {
-                    flags += 1;
-                }
-
-                if (content.CreatorUserId.ToLower().Contains(word.ToLower()))
-                {
-                    flags += 1;
-                }
-            }
-
-            if (content.CreatorProfilePictureURL != null)
-            {
-                flags += MediaCheck(content.CreatorProfilePictureURL);
-            }
-
-            if (content.CreatorBackgroundPictureURL != null)
-            {
-                flags += MediaCheck(content.CreatorBackgroundPictureURL);
-
-            }
-
-            return flags;
-        }
     }
 }
