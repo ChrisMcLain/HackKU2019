@@ -7,7 +7,7 @@ namespace HackKU2019
 {
     public class ContentAnalyzer
     {
-        public int analyzeContent(IContent content)
+        public int AnalyzeContent(IContent content)
         {
             int flags = 0;
             flags += vulgarWordCheck(content.Text);
@@ -24,7 +24,7 @@ namespace HackKU2019
         }
 
         //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
-        private int vulgarWordCheck(string text)
+        private int VulgarWordCheck(string text)
         {
             int vulgarWords = 0;
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
@@ -40,7 +40,7 @@ namespace HackKU2019
         }
 
         //Uses google cloud vision to analyze an image from a post or profile picture for a trigger word
-        private int mediaCheck(string url)
+        private int MediaCheck(string url)
         {
             Image image = Image.FromUri(url);
             ImageAnnotatorClient client = ImageAnnotatorClient.Create();
@@ -60,17 +60,33 @@ namespace HackKU2019
             return mediaFlags;
         }
 
-        private int checkUser(IContent content)
+        private int CheckUser(IContent content)
         {
             int flags = 0;
             VulgarWordsList vulgarWordsList = new VulgarWordsList();
 
             foreach (var word in vulgarWordsList.vulgarWords)
             {
-                if (content.AuthorName.ToLower().Contains(word))
+                if (content.CreatorUserName.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
                 }
+
+                if (content.CreatorUserId.ToLower().Contains(word.ToLower()))
+                {
+                    flags += 1;
+                }
+            }
+
+            if (content.CreatorProfilePictureURL != null)
+            {
+                flags += mediaCheck(content.CreatorProfilePictureURL);
+            }
+
+            if (content.CreatorBackgroundPictureURL != null)
+            {
+                flags += mediaCheck(content.CreatorBackgroundPictureURL);
+
             }
 
             return flags;
