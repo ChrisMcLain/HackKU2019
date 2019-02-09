@@ -23,6 +23,7 @@ namespace HackKU2019.Models
         public string Name { get; set; }
         public string ProfilePictureUrl { get; set; }
         public string UserID { get; set; }
+        public string BannerPictureUrl { get; set; }
         public Platforms Platforms { get; set; }
         public List<Followed> Following { get; set; }
     }
