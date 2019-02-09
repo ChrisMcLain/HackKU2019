@@ -56,8 +56,12 @@ body {
 }
 
 /* Emma added pls send help */
+.padding {
+  height: 20px;
+}
+
 .social_medias {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -66,9 +70,14 @@ body {
 }
 
 .instagram {
-  color: purple;
+  color: #8a3ab9;
 }
 
 .facebook {
   color: #3B5998;
+}
+
+.social_media_descriptions {
+  font-size: 14px;
+  min-height: 60px;
 }
