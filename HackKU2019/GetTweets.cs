@@ -9,16 +9,12 @@ namespace HackKU2019
 {
     public class GetTweets
     {
-        IAuthenticatedUser getUser()
-        {
-            Keys keys = new Keys();
-            var userCredentials = Auth.CreateCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
-            return User.GetAuthenticatedUser(userCredentials);
-        }
+
         
         public void pullTweets(string handle)
         {
-            var authUser = getUser();
+            Keys keys = new Keys();
+            Auth.SetUserCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
             var tweets = Timeline.GetUserTimeline("bracciata");
             Console.WriteLine(tweets);
 
