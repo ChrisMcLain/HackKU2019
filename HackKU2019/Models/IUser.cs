@@ -9,6 +9,7 @@ namespace HackKU2019.Models
         //this would be id or handle
         string BannerPictureUrl { get; set; }
         string UserID { get; set; }
+        string Bio { get; set; }
         Platforms Platforms { get; set; }
         List<Followed> Following { get; set; }
 

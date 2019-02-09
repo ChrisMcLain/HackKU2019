@@ -6,10 +6,12 @@ using System.Net.Http;
 using Google.Cloud.Vision.V1;
 using HackKU2019.Models;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Math.EC;
 using Remotion.Linq.Clauses;
 using Tweetinvi;
 using Tweetinvi.Core.Public.Models.Enum;
 using Tweetinvi.Models;
+using IUser = Tweetinvi.Models.IUser;
 
 namespace HackKU2019
 {
@@ -23,6 +25,7 @@ namespace HackKU2019
             if (checkUserExists(handle))
             {
 
+                
                 var user = User.GetUserFromScreenName(handle);
                 List<Followed> following = new List<Followed>();
                 foreach (var followed in user.Friends)
@@ -37,6 +40,11 @@ namespace HackKU2019
                     following.Add(followedObj);
                 }
 
+                TwitterUser checkedUser = new TwitterUser
+                {
+                    Name = user.Name, UserID = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,
+                    ProfilePictureUrl = user.ProfileImageUrl, Following = following, Platforms = Platforms.Twitter,Bio = user.Description
+                };
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
                 
