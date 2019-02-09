@@ -1,8 +1,19 @@
 using System.Collections.Generic;
+using InstaSharp.Endpoints;
 
 namespace HackKU2019.Models
 {
     public interface IUser
+    {
+        User userInfo { get; set; }
+        Platforms Platforms { get; set; }
+        List<Followed> Following { get; set; }
+        List<Tweet> Tweets { get; set; }
+
+        
+    }
+
+    public class User
     {
         string Name { get; set; }
         string ProfilePictureUrl { get; set; }
@@ -10,18 +21,20 @@ namespace HackKU2019.Models
         string BannerPictureUrl { get; set; }
         string UserID { get; set; }
         string Bio { get; set; }
-        Platforms Platforms { get; set; }
-        List<Followed> Following { get; set; }
-
     }
 
     public class Followed
     {
-        public string followingName { get; set; }
-        public string followingUserId { get; set; }
-        public string followingUserBio { get; set; }
-        public string followingUserProfilePictureUrl { get; set; }
-        public string followingUsersProfileBannerUrl { get; set; }
+        public User UserInfo{ get; set; }
+        public string Issue{ get; set; }
+
+
+    }
+    public class Tweet
+    {
+        public string Text{ get; set; }
+        public User UserCreateBy{ get; set; }
+        public string Issue{ get; set; }
 
     }
 }
