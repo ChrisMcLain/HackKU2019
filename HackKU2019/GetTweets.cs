@@ -53,6 +53,9 @@ namespace HackKU2019
                         MediaUrls = mediaUrls,
                         Platform = Platforms.Twitter,
                         CreatorUserName = tweet.CreatedBy.Name,
+                        CreatorBio = tweet.CreatedBy.Description,
+                        CreatorBackgroundPictureURL = tweet.CreatedBy.ProfileBannerURL
+                        ,CreatorUserId = tweet.CreatedBy.UserIdentifier.ToString()
                     };
 
                     twitterContents.Add(twitterContent);

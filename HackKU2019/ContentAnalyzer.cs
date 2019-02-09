@@ -20,7 +20,9 @@ namespace HackKU2019
                 }
             }
 
+            checkUser();
             return flags;
+            
         }
 
         //checks tweet for how many words from vulgar word list they contain and adds flag for each one.
@@ -57,6 +59,11 @@ namespace HackKU2019
                 }
             }
             return mediaFlags;
+        }
+
+        private int checkUser()
+        {
+            
         }
     }
 }
