@@ -28,9 +28,13 @@ namespace HackKU2019
                 List<string> followingUsersBannerPics=new List<string>();
                 List<string> followingUsersIds=new List<string>();
                 var user = User.GetUserFromScreenName(handle);
-                foreach (var VARIABLE in temp)
+                foreach (var following in user.Friends)
                 {
-                    
+                    followingNames.Add(following.Name);
+                    followingUsersBios.Add(following.Description);
+                    followingUsersProfPics.Add(following.ProfileImageUrl);
+                    followingUsersBannerPics.Add(following.ProfileBannerURL);
+                    followingUsersIds.Add(following.UserIdentifier.ToString());
                 }
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
