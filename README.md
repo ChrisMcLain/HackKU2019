@@ -1,1 +1,2 @@
-# HackKU2019
+# HackKU2019 Socialyzer
+### The purpose of the project is to allow workplaces to more easily analyze a potential employee's social media accounts for things that would deem them unfit for the job. This is important for society as a whole because would you want a teacher you can't trust to be responsible with your children?
