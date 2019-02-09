@@ -3,16 +3,7 @@ using InstaSharp.Endpoints;
 
 namespace HackKU2019.Models
 {
-    public interface IUser
-    {
-        User userInfo { get; set; }
-        Platforms Platforms { get; set; }
-        List<Followed> Following { get; set; }
-        List<Tweet> Tweets { get; set; }
-        string Issues{get;set;}
 
-        
-    }
 
     public class MainUser
     {

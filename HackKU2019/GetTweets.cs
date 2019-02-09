@@ -24,8 +24,6 @@ namespace HackKU2019
             formatHandle(handle);
             if (checkUserExists(handle))
             {
-
-                
                 var user = User.GetUserFromScreenName(handle);
                 List<Followed> following = new List<Followed>();
                 foreach (var followed in user.Friends)
@@ -44,13 +42,14 @@ namespace HackKU2019
                 TwitterUser checkedUser = new TwitterUser
                 {
                     Name = user.Name, UserID = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,
-                    ProfilePictureUrl = user.ProfileImageUrl, Following = following, Platforms = Platforms.Twitter,Bio = user.Description
+                    ProfilePictureUrl = user.ProfileImageUrl, Following = following, Platforms = Platforms.Twitter,
+                    Bio = user.Description
                 };
-                
-                
+
+
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<TwitterContent> twitterContents = new List<TwitterContent>();
-                
+
                 foreach (var tweet in tweets)
                 {
                     List<string> mediaUrls = new List<string>();
@@ -81,13 +80,13 @@ namespace HackKU2019
                         Platform = Platforms.Twitter,
                         CreatorUserName = tweet.CreatedBy.Name,
                         CreatorBio = tweet.CreatedBy.Description,
-                        CreatorBackgroundPictureURL = tweet.CreatedBy.ProfileBannerURL
-                        ,CreatorUserId = tweet.CreatedBy.UserIdentifier.ToString()
+                        CreatorBackgroundPictureURL = tweet.CreatedBy.ProfileBannerURL,
+                        CreatorUserId = tweet.CreatedBy.UserIdentifier.ToString()
                     };
 
                     twitterContents.Add(twitterContent);
-
                 }
+
                 //We will return twitter contents here along with the user class from above to be analyzed
             }
         }
@@ -109,7 +108,5 @@ namespace HackKU2019
             var user = User.GetUserFromScreenName(handle);
             return user != null;
         }
-        
-        
     }
 }
