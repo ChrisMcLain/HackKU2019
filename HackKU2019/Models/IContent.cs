@@ -13,7 +13,9 @@ namespace HackKU2019.Models
         string AuthorName { get; set; }
         List<string> MediaUrls { get; set; }
         string CreatorUserName { get; set; }
+        string CreatorProfilePictureURL { get; set; }
+        //handle or userid
+        string CreatorUserId { get; set; }
         Platforms Platform { get; set; } 
-        String TargetUsername { get; set; }
     }
 }

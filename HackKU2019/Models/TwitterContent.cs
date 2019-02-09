@@ -9,6 +9,8 @@ namespace HackKU2019.Models
         public string AuthorName { get; set; }
         public List<string> MediaUrls { get; set; }
         public string CreatorUserName { get; set; }
+        public string CreatorProfilePictureURL { get; set; }
+        public string CreatorUserId { get; set; }
         public Platforms Platform { get; set; }
         public string TargetUsername { get; set; }
     }
@@ -16,5 +18,8 @@ namespace HackKU2019.Models
     public class TwitterUser : IUser
     {
         public string Name { get; set; }
+        public string ProfilePictureUrl { get; set; }
+        public string UserID { get; set; }
+        public Platforms Platforms { get; set; }
     }
 }

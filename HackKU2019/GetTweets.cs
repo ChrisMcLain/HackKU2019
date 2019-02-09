@@ -46,7 +46,7 @@ namespace HackKU2019
                     {
                         TargetUsername = handle.Substring(1),
                         Text = tweet.Text, AuthorName = tweet.CreatedBy.Name, MediaUrls = mediaUrls,
-                        Platform = Platforms.Twitter, CreatorUserName = tweet.CreatedBy.Name, C
+                        Platform = Platforms.Twitter, CreatorUserName = tweet.CreatedBy.Name,
                     };
 
                     twitterContents.Add(twitterContent);
