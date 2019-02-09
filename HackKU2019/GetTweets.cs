@@ -24,54 +24,71 @@ namespace HackKU2019
             Keys keys = new Keys();
             Auth.SetUserCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
             FormatHandle(handle);
+            
             if (CheckUserExists(handle))
             {
                 var user = User.GetUserFromScreenName(handle);
                 List<Followed> following = new List<Followed>();
-                
-                foreach (var followed in user.Friends)
+
+                if (user.Friends != null)
                 {
-                    Followed followedObj = new Followed
+                    foreach (var followed in user.Friends)
                     {
-                      UserInfo = new Models.User
-                      {
-                          BannerPictureUrl = followed.ProfileBannerURL,Bio = followed.Description,Name=followed.Name,ProfilePictureUrl = followed.ProfileImageUrl,UserId = followed.UserIdentifier.ToString()
-                      },Issue = ""
-                    };
-                    following.Add(followedObj);
+                        Followed followedObj = new Followed
+                        {
+                            UserInfo = new Models.User
+                            {
+                                BannerPictureUrl = followed.ProfileBannerURL, Bio = followed.Description,
+                                Name = followed.Name, ProfilePictureUrl = followed.ProfileImageUrl,
+                                UserId = followed.UserIdentifier.ToString()
+                            },
+                            Issue = ""
+                        };
+                        following.Add(followedObj);
+                    }
                 }
 
                 //we will return this
                 var tweets = Timeline.GetUserTimeline(handle);
                 List<Tweets> twitterContents = new List<Tweets>();
 
-                foreach (var tweet1 in tweets)
+                if (tweets != null)
                 {
-                    List<string> mediaUrls = new List<string>();
-                    try
+                    foreach (var tweet1 in tweets)
                     {
-                        foreach (var media in tweet1.Media)
+                        List<string> mediaUrls = new List<string>();
+                        try
                         {
-                            //can't analyze videos using google cloud vision
-                            if (media.MediaType != MediaType.VideoMp4.ToString())
+                            foreach (var media in tweet1.Media)
                             {
-                                //Adds the links of all tweets images
-                                mediaUrls.Add(media.MediaURL);
+                                //can't analyze videos using google cloud vision
+                                if (media.MediaType != MediaType.VideoMp4.ToString())
+                                {
+                                    //Adds the links of all tweets images
+                                    mediaUrls.Add(media.MediaURL);
+                                }
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
 
-                    //Adds tweets to list from above
-                    var thisTweet = new Tweets
-                    {
-                        UserCreateBy = new Models.User { UserId = tweet1.CreatedBy.UserIdentifier.ToString(),BannerPictureUrl =tweet1.CreatedBy.ProfileBannerURL,Bio = tweet1.CreatedBy.Description,Name = tweet1.CreatedBy.Name,ProfilePictureUrl = tweet1.CreatedBy.ProfileImageUrl}, Text = tweet1.Text, Issue = ""
-                    };
+                        //Adds tweets to list from above
+                        var thisTweet = new Tweets
+                        {
+                            UserCreateBy = new Models.User
+                            {
+                                UserId = tweet1.CreatedBy.UserIdentifier.ToString(),
+                                BannerPictureUrl = tweet1.CreatedBy.ProfileBannerURL,
+                                Bio = tweet1.CreatedBy.Description, Name = tweet1.CreatedBy.Name,
+                                ProfilePictureUrl = tweet1.CreatedBy.ProfileImageUrl
+                            },
+                            Text = tweet1.Text, Issue = ""
+                        };
 
-                    twitterContents.Add(thisTweet);
+                        twitterContents.Add(thisTweet);
+                    }
                 }
 
                 //We will return twitter contents here along with the user class from above to be analyzed

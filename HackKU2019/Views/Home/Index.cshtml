@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ResultsModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -78,12 +79,36 @@
 </div>
 
 <div class="row">
-    <div class="col-4 background_twitter">
-        <div class="results_content">
-            place for username <br>
-            tweets
+    @if (Model != null)
+    {
+        <div class="col-4 background_twitter">
+            <div class="card">
+                <div class="card-body">
+                    @Model.User.TotalFlags
+                </div>
+            </div>
+            
+            @foreach (var tweet in Model.User.Tweets)
+            {
+                var color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
+                if (tweet.TotalFlags > 0)
+                {
+                    <div class="small_padding"></div>
+                    <div class="card @(color)_cards">
+                        <div class="card-body">
+                            <strong>@tweet.TotalFlags Flags</strong>
+                            <br/>
+                            <em>@tweet.Issue</em>
+                            <hr/>
+                            <strong>Tweet Content</strong>
+                            <br/>
+                            @tweet.Text
+                        </div>
+                    </div>
+                }
+            }
         </div>
-    </div>
+    }
     <div class="col-4 background_instagram">
         <div class="card ">
             <div class="card-body">
@@ -91,19 +116,19 @@
             </div>
         </div>
         <div class="small_padding"></div>
-        <div class="card  red_cards">
+        <div class="card red_cards">
             <div class="card-body">
                 This is some text within a card body.
             </div>
         </div>
         <div class="small_padding"></div>
-        <div class="card  orange_cards">
+        <div class="card orange_cards">
             <div class="card-body">
                 This is some text within a card body.
             </div>
         </div>
         <div class="small_padding"></div>
-        <div class="card  yellow_cards">
+        <div class="card yellow_cards">
             <div class="card-body">
                 This is some text within a card body.
             </div>

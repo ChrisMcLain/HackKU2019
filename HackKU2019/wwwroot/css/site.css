@@ -91,7 +91,6 @@ body {
 
 .background_twitter {
     background-color: #e5f6fd;
-    height: 100px;
     border-style: solid;
     border-color: white;
     border-width: 3px;
@@ -108,7 +107,6 @@ body {
 
 .background_facebook {
     background-color: #ebeef4;
-    height: 100px;
     border-style: solid;
     border-color: white;
     border-width: 3px;

@@ -12,7 +12,7 @@ namespace HackKU2019
         public int AnalyzeContent(MainUser user)
         {
             int flags = 0;
-            TweetsCheck(user.Tweets,user.UserInfo.UserId);
+            TweetsCheck(user.Tweets, user.UserInfo.UserId);
             IssueFlagsReturnObj obj = CheckUser(user.UserInfo);
             user.Issues += obj.Issue;
             user.TotalFlags += obj.Flags;
@@ -32,6 +32,7 @@ namespace HackKU2019
             }
 
         }
+        
         private int UserCheck(User user)
         {
             int flags = 0;
@@ -39,16 +40,17 @@ namespace HackKU2019
            flags += returnObj.Flags;
             return flags;
         }
-        private void TweetsCheck(List<Tweets> content,string idInQuestion)
+        
+        private void TweetsCheck(List<Tweets> content, string idInQuestion)
         {
             foreach (var tweet in content)
             {
 
-                IssueFlagsReturnObj returnObj =VulgarWordCheck(tweet.Text);
+                IssueFlagsReturnObj returnObj = VulgarWordCheck(tweet.Text);
                 tweet.TotalFlags += returnObj.Flags;
                 tweet.Issue += returnObj.Issue;
 
-                if (tweet.MediaUrls.Count > 0)
+                if (tweet.MediaUrls?.Count > 0)
                 {
                     foreach (var mediaUrl in tweet.MediaUrls)
                     {
@@ -76,30 +78,32 @@ namespace HackKU2019
                 if (text.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
+                    issues += "Use of vulgar term " + word + ". ";
                 }
             }
 
             IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
-            return returnObj;        }
+            return returnObj;
+        }
 
         //Uses google cloud vision to analyze an image from a post or profile picture for a trigger word
         private IssueFlagsReturnObj MediaCheck(string url)
         {
             int flags = 0;
             string issues = "";
-            Image image = Image.FromUri(url);
-            ImageAnnotatorClient client = ImageAnnotatorClient.Create();
-            IReadOnlyList<EntityAnnotation> labels = client.DetectLabels(image);
-            VulgarWordsList vulgarWordsList = new VulgarWordsList();
-
-            foreach (EntityAnnotation label in labels)
-            {
-                foreach (var badWord in vulgarWordsList.VulgarWords)
-                {
-                    if (label.Score > .5 && label.Description.ToLower().Contains(badWord.ToLower()))
-                        flags++;
-                }
-            }
+            //Image image = Image.FromUri(url);
+            //ImageAnnotatorClient client = ImageAnnotatorClient.Create();
+            //IReadOnlyList<EntityAnnotation> labels = client.DetectLabels(image);
+            //VulgarWordsList vulgarWordsList = new VulgarWordsList();
+//
+            //foreach (EntityAnnotation label in labels)
+            //{
+            //    foreach (var badWord in vulgarWordsList.VulgarWords)
+            //    {
+            //        if (label.Score > .5 && label.Description.ToLower().Contains(badWord.ToLower()))
+            //            flags++;
+            //    }
+            //}
 
             IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
             return returnObj;
@@ -143,7 +147,8 @@ namespace HackKU2019
             {
                 IssueFlagsReturnObj obj= MediaCheck(content.BannerPictureUrl);
                 flags += obj.Flags;
-                issues += obj.Issue;            }
+                issues += obj.Issue;
+            }
 
             IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
             return returnObj;
