@@ -166,23 +166,16 @@
 }
 
 <script>
-var update;
 
 function ViewLoadingFunction() {
       document.getElementById("loader").style.display = "block";
 
-    update = setTimeout(showPage, 100000);
 }
 
-function showPage() {
-  document.getElementById("loader").style.display = "none";
-}
     function scrollFunction() {
         var elmnt = document.getElementById("results");
-        console.log(elmnt.style.top);
         setTimeout(function () {
             elmnt.scrollIntoView();
         }, 1000);
-        console.log("here");
-    }
+  }
 </script>
