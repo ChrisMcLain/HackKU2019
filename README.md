@@ -9,7 +9,7 @@
 * Google App Engine for hosting
 * Domain.com for our domain [Socialyzer](http://www.Socialyzer.org)
 * ASP Net Core
-* TweetInvi the twitter API wrapper for C#
+* TweetInvi the Twitter API wrapper for C#
 
 ## Images
 #### Opening site
