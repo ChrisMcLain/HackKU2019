@@ -22,7 +22,7 @@ namespace HackKU2019
 {
     public class GetTweets
     {
-        public ResultsModel PullTweets(string handle)
+        public ResultsModel PullTweets(string handle, string options)
         {
             Keys keys = new Keys();
             Auth.SetUserCredentials(keys.ConsumerKey, keys.ConsumerSecret, keys.TokenKey, keys.TokenSecret);
@@ -108,14 +108,25 @@ namespace HackKU2019
                     {
                         UserId = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,Bio=user.Description,Name=user.Name,ProfilePictureUrl = user.ProfileImageUrl
                     }, 
-                    Tweets = twitterContents,Following = following
+                    Tweets = twitterContents, Following = following
                 };
 
-                return new ResultsModel
+                var model = new ResultsModel {User = checkedUser, Tweets = twitterContents};
+
+                if (options.Equals("asc_time"))
                 {
-                    User = checkedUser,
-                    Tweets = twitterContents
-                };
+                    model.Tweets.Reverse();
+                }
+                else if (options.Equals("desc_severity"))
+                {
+                    model.Tweets = model.Tweets.OrderByDescending(n => n.TotalFlags).ToList();
+                } 
+                else if (options.Equals("asc_severity"))
+                {
+                    model.Tweets = model.Tweets.OrderBy(n => n.TotalFlags).ToList();
+                }
+
+                return model;
             }
 
             return null;

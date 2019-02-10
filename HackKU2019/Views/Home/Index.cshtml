@@ -44,18 +44,21 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div align="center">
+                @{
+                    var sorting = Model == null ? "desc_time" : Model.Sorting;
+                }
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Recent <i class="fas fa-arrow-circle-up"></i>
+                    <label class="btn btn-secondary @(sorting.Equals("desc_time") ? "active" : "")">
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="desc_time" @(sorting.Equals("desc_time") ? "checked" : "")> Recent <i class="fas fa-arrow-circle-up"></i>
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Oldest <i class="fas fa-arrow-circle-down"></i>
+                    <label class="btn btn-secondary @(sorting.Equals("asc_time") ? "active" : "")">
+                        <input type="radio" name="options" id="option2" autocomplete="off" value="asc_time" @(sorting.Equals("asc_time") ? "checked" : "")> Oldest <i class="fas fa-arrow-circle-down"></i>
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Most Flags <i class="fas fa-arrow-circle-up"></i>
+                    <label class="btn btn-secondary @(sorting.Equals("desc_severity") ? "active" : "")">
+                        <input type="radio" name="options" id="option3" autocomplete="off" value="desc_severity" @(sorting.Equals("desc_severity") ? "checked" : "")> Most Flags <i class="fas fa-arrow-circle-up"></i>
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Least Flags <i class="fas fa-arrow-circle-down"></i>
+                    <label class="btn btn-secondary @(sorting.Equals("asc_severity") ? "active" : "")">
+                        <input type="radio" name="options" id="option4" autocomplete="off" value="asc_severity" @(sorting.Equals("asc_severity") ? "checked" : "")> Least Flags <i class="fas fa-arrow-circle-down"></i>
                     </label>
                 </div>
                 <div class="padding"></div>
@@ -124,7 +127,7 @@
                     {
                         <div class="row align-items-center" >
                             <div class="col-6" align="right">
-                                <div class="card @*@(color)_cards*@">
+                                <div class="card">
                                     @foreach (var media in tweet.MediaUrls)
                                     {
                                         <img class="card-img-top" src="@media" alt="Tweet Media">
