@@ -16,6 +16,7 @@ using IUser = Tweetinvi.Models.IUser;
 using Tweet = Tweetinvi.Tweet;
 using User = Tweetinvi.User;
 using Google.Cloud.Translation.V2;
+using Grpc.Auth;
 
 namespace HackKU2019
 {
@@ -58,11 +59,11 @@ namespace HackKU2019
                 {
                     foreach (var tweet in tweets)
                     {
-                        string languageOfTweet = DetectLanguage(tweet.Text);
+                        /*string languageOfTweet = DetectLanguage(tweet.Text);
                         if (languageOfTweet != "en")
                         {
                             tweet.Text = TranslateText(languageOfTweet, tweet.Text);
-                        }
+                        }*/
                         List<string> mediaUrls = new List<string>();
                         try
                         {
@@ -92,7 +93,8 @@ namespace HackKU2019
                                 ProfilePictureUrl = tweet.CreatedBy.ProfileImageUrl
                             },
                             Text = tweet.Text, Issue = "",
-                            MediaUrls = mediaUrls
+                            MediaUrls = mediaUrls,
+                            Id = tweet.Id
                         };
 
                         twitterContents.Add(thisTweet);
@@ -118,28 +120,29 @@ namespace HackKU2019
 
             return null;
         }
-        private string TranslateText(string detectedLanguage,string tweetText)
+        private string TranslateText(string detectedLanguage, string tweetText)
         {
-            TranslationClient client = TranslationClient.Create();
+            TranslationClient client = TranslationClient.Create(Program.Credential);
             var response = client.TranslateText(
                 text: tweetText,
                 targetLanguage: "en",  // Russian
                 sourceLanguage: detectedLanguage);  // English
             return response.TranslatedText;
         }
+        
         private string DetectLanguage(string tweetText)
         {
-            TranslationClient client = TranslationClient.Create();
+            TranslationClient client = TranslationClient.Create(Program.Credential);
             var detection = client.DetectLanguage(text: tweetText);
             return detection.Language;
         }
 
         //Assuming they did not add the @ symbol adds it for them
-        public String FormatHandle(string handle)
+        public string FormatHandle(string handle)
         {
-            if (handle[0] != '@')
+            if (!handle.StartsWith("@"))
             {
-                handle = handle.Insert(0, "@");
+                handle = "@" + handle;
             }
 
             return handle;

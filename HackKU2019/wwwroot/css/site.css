@@ -120,7 +120,7 @@ body {
     padding: 20px;
 }
 
-.arrow-left {
+.arrow-left-red {
     width: 0;
     height: 0;
     border-top: 100px solid transparent;
@@ -128,8 +128,23 @@ body {
     border-right: 100px solid #ff4c4c;
 }
 
+.arrow-left-orange {
+    width: 0;
+    height: 0;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-right: 100px solid #ffc04c;
+}
+
+.arrow-left-yellow {
+    width: 0;
+    height: 0;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-right: 100px solid #ffff4c;
+}
+
 .issue {
-    background-color: #ff4c4c;
     padding: 10px;
     width: 100%;
 }

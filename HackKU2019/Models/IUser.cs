@@ -16,11 +16,11 @@ namespace HackKU2019.Models
     {
         public string Name { get; set; }
 
-        public string ProfilePictureUrl
-        {
+        public string ProfilePictureUrl { get; set; }
+        /*{
             get => ProfilePictureUrl.Replace("_normal", "");
             set => ProfilePictureUrl = value;
-        }
+        }*/
 
         //this would be id or handle
         public string BannerPictureUrl { get; set; }
@@ -44,7 +44,6 @@ namespace HackKU2019.Models
         public User UserCreateBy{ get; set; }
         public string Issue{ get; set; }
         public int TotalFlags { get; set; }
-
-
+        public long Id { get; set; }
     }
 }
