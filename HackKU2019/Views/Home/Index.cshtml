@@ -32,7 +32,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="twitter_input">@@</span>
                 </div>
-                <input name="twitter" type="text" class="form-control" placeholder="Handle" aria-label="Username" aria-describedby="twitter_input" value="@(Model != null ? Model.User.UserInfo.UserId : "")">
+                <input name="twitter" type="text" class="form-control" placeholder="Handle" aria-label="Username" aria-describedby="twitter_input" value="@(Model != null && Model.User != null ? Model.User.UserInfo.UserId : "")">
             </div>
         </div>
         <div class="padding"></div>
@@ -48,81 +48,92 @@
 
 @if (Model != null)
 {
-    var color = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
-    <div class="row" id="results">
-        <div class="col-12">
-            <div class="row align-items-center">
-                <div class="col-6" align="right">
-                    <div class="card">
-                        <img class="card-img-top" src="@Model.User.UserInfo.ProfilePictureUrl.Replace("_normal", "")" alt="Tweet Media">
-                        <img class="card-img-top" src="@Model.User.UserInfo.BannerPictureUrl" alt="Tweet Media">
-                        <div class="card-body">
-                            <strong>@Model.User.UserInfo.Name - <em>@@@Model.User.UserInfo.UserId</em></strong>
-                            <br/>
-                            @Model.User.UserInfo.Bio
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6" align="left">
-                    <div class="issue_container">
-                        <div class="arrow-left-@(color)"></div>
-                        <div class="issue @(color)_cards">
-                            <strong>@Model.User.TotalFlags Potential Problem@(Model.User.TotalFlags > 1 ? "s" : "") in Profile</strong>
-                            <ul>
-                                @foreach (var issue in Model.User.IssueList)
-                                {
-                                    <li>@issue</li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr/>
-            
-            @foreach (var tweet in Model.Tweets)
-            {
-                var id = "tweet" + tweet.Id;
-                color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
-                if (tweet.TotalFlags > 0)
-                {
-                    <div class="row align-items-center">
-                        <div class="col-6" align="right">
-                            <div class="card @*@(color)_cards*@">
-                                @foreach (var media in tweet.MediaUrls)
-                                {
-                                    <img class="card-img-top" src="@media" alt="Tweet Media">
-                                }
-                                <div class="card-body">
-                                    <strong>Tweet Content</strong>
-                                    <br/>
-                                    @tweet.Text
-                                    <br/>
-                                    <a href="https://twitter.com/statuses/@tweet.Id">View on Twitter</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6" align="left">
-                            <div class="issue_container">
-                                <div class="arrow-left-@(color)"></div>
-                                <div class="issue @(color)_cards">
-                                    <strong>@tweet.TotalFlags Potential Problem@(tweet.TotalFlags > 1 ? "s" : "") in Tweet</strong>
-                                    <ul>
-                                        @foreach (var issue in tweet.IssueList)
-                                        {
-                                            <li>@issue</li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                }
-            }
+    if (Model.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong> @Model.Error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+    }
+    else
+    {
+        var color = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
+        <div class="row" id="results">
+            <div class="col-12">
+                <div class="row align-items-center">
+                    <div class="col-6" align="right">
+                        <div class="card">
+                            <img class="card-img-top" src="@Model.User.UserInfo.ProfilePictureUrl.Replace("_normal", "")" alt="Tweet Media">
+                            <img class="card-img-top" src="@Model.User.UserInfo.BannerPictureUrl" alt="Tweet Media">
+                            <div class="card-body">
+                                <strong>@Model.User.UserInfo.Name - <em>@@@Model.User.UserInfo.UserId</em></strong>
+                                <br/>
+                                @Model.User.UserInfo.Bio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6" align="left">
+                        <div class="issue_container">
+                            <div class="arrow-left-@(color)"></div>
+                            <div class="issue @(color)_cards">
+                                <strong>@Model.User.TotalFlags Potential Problem@(Model.User.TotalFlags > 1 ? "s" : "") in Profile</strong>
+                                <ul>
+                                    @foreach (var issue in Model.User.IssueList)
+                                    {
+                                        <li>@issue</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
 
-        @*@if (Model != null)
+                @foreach (var tweet in Model.Tweets)
+                {
+                    var id = "tweet" + tweet.Id;
+                    color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
+                    if (tweet.TotalFlags > 0)
+                    {
+                        <div class="row align-items-center">
+                            <div class="col-6" align="right">
+                                <div class="card @*@(color)_cards*@">
+                                    @foreach (var media in tweet.MediaUrls)
+                                    {
+                                        <img class="card-img-top" src="@media" alt="Tweet Media">
+                                    }
+                                    <div class="card-body">
+                                        <strong>Tweet Content</strong>
+                                        <br/>
+                                        @tweet.Text
+                                        <br/>
+                                        <a href="https://twitter.com/statuses/@tweet.Id">View on Twitter</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6" align="left">
+                                <div class="issue_container">
+                                    <div class="arrow-left-@(color)"></div>
+                                    <div class="issue @(color)_cards">
+                                        <strong>@tweet.TotalFlags Potential Problem@(tweet.TotalFlags > 1 ? "s" : "") in Tweet</strong>
+                                        <ul>
+                                            @foreach (var issue in tweet.IssueList)
+                                            {
+                                                <li>@issue</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                    }
+                }
+            </div>
+
+            @*@if (Model != null)
             {
                 <div class="col-6 background_twitter">
                     <div class="card">
@@ -152,5 +163,6 @@
                     }
                 </div>
             }*@
-    </div>
+        </div>
+    }
 }
