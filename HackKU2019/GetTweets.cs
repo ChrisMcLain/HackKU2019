@@ -108,7 +108,8 @@ namespace HackKU2019
                     {
                         UserId = user.UserIdentifier.ToString(), BannerPictureUrl = user.ProfileBannerURL,Bio=user.Description,Name=user.Name,ProfilePictureUrl = user.ProfileImageUrl
                     }, 
-                    Tweets = twitterContents, Following = following
+                    Tweets = twitterContents, 
+                    Following = following
                 };
 
                 var model = new ResultsModel {User = checkedUser, Tweets = twitterContents};
