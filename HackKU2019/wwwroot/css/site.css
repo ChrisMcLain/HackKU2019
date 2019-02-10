@@ -165,3 +165,9 @@ body {
 .navbar {
     background-color: #00aced !important;
 }
+.navbar-brand{
+    color: white !important;
+}
+.navbar-nav .nav-link{
+    color: white !important;
+}
