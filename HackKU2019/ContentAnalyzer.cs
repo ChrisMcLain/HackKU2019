@@ -16,7 +16,6 @@ namespace HackKU2019
             TweetsCheck(user.Tweets, user.UserInfo.UserId);
             IssueFlagsReturnObj obj = CheckUser(user.UserInfo);
             user.Issues += obj.Issue;
-            user.TotalFlags += obj.Flags;
             //updates all following with issues
             
             CheckFollowing(user);
@@ -46,7 +45,6 @@ namespace HackKU2019
             foreach (var tweet in content)
             {
                 IssueFlagsReturnObj returnObj = VulgarWordCheck(tweet.Text);
-                tweet.TotalFlags += returnObj.Flags;
                 tweet.Issue += returnObj.Issue;
 
                 if (tweet.MediaUrls?.Count > 0)
@@ -54,7 +52,6 @@ namespace HackKU2019
                     foreach (var mediaUrl in tweet.MediaUrls)
                     {
                         IssueFlagsReturnObj obj = MediaCheck(mediaUrl);
-                        tweet.TotalFlags += obj.Flags;
                         tweet.Issue += obj.Issue;
                     }
                 }

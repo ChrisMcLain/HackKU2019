@@ -68,7 +68,12 @@
                         <div class="arrow-left-@(color)"></div>
                         <div class="issue @(color)_cards">
                             <strong>@Model.User.TotalFlags Potential Problems in Profile</strong>
-                            <p>@Model.User.Issues</p>
+                            <ul>
+                                @foreach (var issue in Model.User.IssueList)
+                                {
+                                    <li>@issue</li>
+                                }
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -102,7 +107,12 @@
                                 <div class="arrow-left-@(color)"></div>
                                 <div class="issue @(color)_cards">
                                     <strong>@tweet.TotalFlags Potential Problem@(tweet.TotalFlags > 1 ? "s" : "")</strong>
-                                    <p>@tweet.Issue</p>
+                                    <ul>
+                                        @foreach (var issue in tweet.IssueList)
+                                        {
+                                            <li>@issue</li>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>
