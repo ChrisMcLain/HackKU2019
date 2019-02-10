@@ -127,19 +127,19 @@ namespace HackKU2019
                 if (content.Name.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
-                    issues += "Name contains vulgar term " + word + ".";
+                    issues += "Name contains vulgar term " + word + ". ";
                 }
 
                 if (content.UserId.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
-                    issues += "Handle contains vulgar term " + word + ".";
+                    issues += "Handle contains vulgar term " + word + ". ";
                 }
 
                 if (content.Bio.ToLower().Contains(word.ToLower()))
                 {
                     flags += 1;
-                    issues += "Bio contains vulgar term " + word + ".";
+                    issues += "Bio contains vulgar term " + word + ". ";
                 }
             }
 

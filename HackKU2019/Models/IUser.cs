@@ -15,7 +15,13 @@ namespace HackKU2019.Models
     public class User
     {
         public string Name { get; set; }
-        public string ProfilePictureUrl { get; set; }
+
+        public string ProfilePictureUrl
+        {
+            get => ProfilePictureUrl.Replace("_normal", "");
+            set => ProfilePictureUrl = value;
+        }
+
         //this would be id or handle
         public string BannerPictureUrl { get; set; }
         public string UserId { get; set; }
