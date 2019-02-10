@@ -5,7 +5,7 @@
 
 ## Images
 #### Opening site
-![](images/Socialyzer-Empty.PNGg?raw=true)
+![](images/Socialyzer-Empty.PNG?raw=true)
 #### After picking a user
 ![](images/Socialyzer.PNG?raw=true)
 #### Picking an invalid user
