@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4 col-sm-12">
         <div class="social_medias twitter" align="center">
             Twitter
@@ -31,126 +31,76 @@
         </div>-->
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@@</span>
+                <span class="input-group-text" id="twitter_input">@@</span>
             </div>
-            <input type="text" class="form-control" placeholder="Handle" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Handle" aria-label="Username" aria-describedby="twitter_input">
         </div>
         <div class="padding"></div>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="social_medias instagram" align="center">
-            Instagram
-        </div>
-        <div class="small_padding"></div>
-        <!--<div class="social_media_descriptions" align="center">
-            Enter in someone's insta handle to stalk them
-        </div>-->
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@@</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="padding"></div>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="social_medias facebook" align="center">
-            Facebook
-        </div>
-        <div class="small_padding"></div>
-        <!--<div class="social_media_descriptions" align="center">
-            Enter someone's facebook (if they even still use that) to "check up" on them
-        </div>-->
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">facebook.com/</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
     </div>
     <div class="padding"></div>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-4" align="center">
-        <button type="button" class="btn btn-success btn-lg">See Results</button>
+        <button type="button" class="btn btn-success btn-lg" onclick="revealResults()">See Results</button>
         <div class="padding"></div>
     </div>
 </div>
 
-<div class="row">
-    @if (Model != null)
-    {
-        var userColor = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
-        <div class="col-4 background_twitter">
-            <div class="card @(userColor)_cards">
-                <img class="card-img-top" src="@Model.User.UserInfo.ProfilePictureUrl" alt="Profile Picture"/>
-                <img class="card-img-top" src="@Model.User.UserInfo.BannerPictureUrl" alt="Banner Picture"/>
-                <div class="card-body">
-                    <p class="card-text">
-                        <strong>@Model.User.UserInfo.Name's Profile</strong>
-                        <br/>
-                        @Model.User.UserInfo.Bio
-                        <hr/>
-                        <strong>@Model.User.TotalFlags Potential Issue@(Model.User.TotalFlags > 1 ? "s" : "")</strong>
-                        <br/>
-                        <em>@Model.User.Issues</em>
-                    </p>
+<div class="row" id="results" style="visibility: hidden;">
+    <div class="col-12">
+        <div class="row align-items-center">
+            <div class="col-6" align="right">
+                <div class="card">
+                    <div class="card-body">
+                    </div>
                 </div>
             </div>
-            @foreach (var tweet in Model.User.Tweets)
-            {
-                var color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
-                if (tweet.TotalFlags > 0)
+            <div class="col-6" align="left">
+                <div class="issue_container">
+                    <div class="arrow-left"></div>
+                    <div class="issue">
+                        <p>this is where the issues go</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--@if (Model != null)
+        {
+            <div class="col-6 background_twitter">
+                <div class="card">
+                    <div class="card-body">
+                        @Model.User.TotalFlags
+                    </div>
+                </div>
+
+                @foreach (var tweet in Model.User.Tweets)
                 {
-                    <div class="small_padding"></div>
-                    <div class="card @(color)_cards">
-                        @foreach (var media in tweet.MediaUrls)
-                        {
-                            <img class="card-img-top" src="@media" alt="@tweet.Issue"/>
-                        }
-                        <div class="card-body">
-                            <p class="card-text">
+                    var color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
+                    if (tweet.TotalFlags > 0)
+                    {
+                        <div class="small_padding"></div>
+                        <div class="card @(color)_cards">
+                            <div class="card-body">
+                                <strong>@tweet.TotalFlags Flags</strong>
+                                <br/>
+                                <em>@tweet.Issue</em>
+                                <hr/>
                                 <strong>Tweet Content</strong>
                                 <br/>
                                 @tweet.Text
-                                <hr/>
-                                <strong>@tweet.TotalFlags Potential Issue@(tweet.TotalFlags > 1 ? "s" : "")</strong>
-                                <br/>
-                                <em>@tweet.Issue</em>
-                            </p>
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
-        </div>
-    }
-    <div class="col-4 background_instagram">
-        <div class="card ">
-            <div class="card-body">
-                This username is ATROCIOUS
             </div>
-        </div>
-        <div class="small_padding"></div>
-        <div class="card red_cards">
-            <div class="card-body">
-                This is some text within a card body.
-            </div>
-        </div>
-        <div class="small_padding"></div>
-        <div class="card orange_cards">
-            <div class="card-body">
-                This is some text within a card body.
-            </div>
-        </div>
-        <div class="small_padding"></div>
-        <div class="card yellow_cards">
-            <div class="card-body">
-                This is some text within a card body.
-            </div>
-        </div>
-    </div>
-    <div class="col-4 background_facebook">
-
-    </div>
+        }-->
 </div>
+
+<script>
+    function revealResults() {
+        document.getElementById("results").style.visibility = "visible";
+    }
+</script>
