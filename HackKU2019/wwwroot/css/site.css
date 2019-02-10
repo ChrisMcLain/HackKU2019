@@ -171,3 +171,7 @@ body {
 .navbar-nav .nav-link{
     color: white !important;
 }
+.small-li{
+    font-size: 15px;
+    margin-top: 30px;
+}
