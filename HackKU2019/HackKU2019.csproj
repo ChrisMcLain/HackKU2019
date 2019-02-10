@@ -2,9 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>    
-        <OutputType>exe</OutputType>
-        <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     </PropertyGroup>
 
 
