@@ -67,7 +67,7 @@
                     <div class="issue_container">
                         <div class="arrow-left-@(color)"></div>
                         <div class="issue @(color)_cards">
-                            <strong>@Model.User.TotalFlags Potential Problems</strong>
+                            <strong>@Model.User.TotalFlags Potential Problems in Profile</strong>
                             <p>@Model.User.Issues</p>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                             <div class="issue_container">
                                 <div class="arrow-left-@(color)"></div>
                                 <div class="issue @(color)_cards">
-                                    <strong>@tweet.TotalFlags Potential Problems</strong>
+                                    <strong>@tweet.TotalFlags Potential Problem@(tweet.TotalFlags > 1 ? "s" : "")</strong>
                                     <p>@tweet.Issue</p>
                                 </div>
                             </div>
