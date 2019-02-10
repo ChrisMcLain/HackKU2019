@@ -24,7 +24,7 @@
 <form action="@Url.Action("Index")" method="get">
     <div class="row justify-content-center">
         <div class="col-md-4 col-sm-12">
-            <div class="social_medias twitter" align="center">
+            <div class="social_medias twitter" id="twitter_start" align="center">
                 Twitter
             </div>
             <div class="small_padding"></div>
@@ -40,7 +40,7 @@
 
     <div class="row justify-content-center">
         <div class="col-4" align="center">
-            <button type="submit" class="btn btn-success btn-lg">See Results</button>
+            <button type="submit" class="btn btn-success btn-lg" onclick="scrollFunction()">See Results</button>
             <div class="padding"></div>
         </div>
     </div>
@@ -166,3 +166,10 @@
         </div>
     }
 }
+
+<script>
+    function scrollFunction() {
+        var elmnt = document.getElementById("results");
+        elmnt.scrollIntoView();
+    }
+</script>
