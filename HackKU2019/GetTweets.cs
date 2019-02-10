@@ -59,11 +59,11 @@ namespace HackKU2019
                 {
                     foreach (var tweet in tweets)
                     {
-                        /*string languageOfTweet = DetectLanguage(tweet.Text);
+                        string languageOfTweet = DetectLanguage(tweet.Text);
                         if (languageOfTweet != "en")
                         {
                             tweet.Text = TranslateText(languageOfTweet, tweet.Text);
-                        }*/
+                        }
                         List<string> mediaUrls = new List<string>();
                         try
                         {
