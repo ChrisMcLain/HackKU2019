@@ -65,12 +65,14 @@
 
     <div class="row justify-content-center">
         <div class="col-4" align="center">
-            <button type="submit" class="btn btn-success btn-lg" onclick="scrollFunction();">See Results</button>
+            <button type="submit" class="btn btn-success btn-lg" onclick="ViewLoadingFunction(); scrollFunction(); ">See Results</button>
             <div class="padding"></div>
         </div>
     </div>
 </form>
-
+<div class="centerAlign">
+<div class="loader"id="loader"></div>
+</div>
 @if (Model != null)
 {
     if (Model.Error != null)
@@ -164,6 +166,17 @@
 }
 
 <script>
+var update;
+
+function ViewLoadingFunction() {
+      document.getElementById("loader").style.display = "block";
+
+    update = setTimeout(showPage, 100000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+}
     function scrollFunction() {
         var elmnt = document.getElementById("results");
         console.log(elmnt.style.top);
