@@ -165,3 +165,19 @@ body {
 .navbar {
     background-color: #00aced !important;
 }
+.navbar-brand{
+    color: white !important;
+}
+.navbar-brand:hover{
+    color: #e5e5ef!important;
+}
+.navbar-nav .nav-link{
+    color: white !important;
+}
+.navbar-nav .nav-link:hover{
+    color: #e5e5ef!important;
+}
+.small-li{
+    font-size: 15px;
+    margin-top: 30px;
+}
