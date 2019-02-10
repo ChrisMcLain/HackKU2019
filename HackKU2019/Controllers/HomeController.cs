@@ -19,7 +19,22 @@ namespace HackKU2019.Controllers
                     var model = new GetTweets().PullTweets(twitter, options);
                     var analyzer = new ContentAnalyzer();
                     analyzer.AnalyzeContent(model.User);
+                    
                     model.Sorting = options;
+                    
+                    if (options.Equals("asc_time"))
+                    {
+                        model.Tweets.Reverse();
+                    }
+                    else if (options.Equals("desc_severity"))
+                    {
+                        model.Tweets = model.Tweets.OrderByDescending(n => n.TotalFlags).ToList();
+                    } 
+                    else if (options.Equals("asc_severity"))
+                    {
+                        model.Tweets = model.Tweets.OrderBy(n => n.TotalFlags).ToList();
+                    }
+                    
                     return View(model);
                 }
                 catch (Exception exception)

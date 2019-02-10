@@ -113,20 +113,6 @@ namespace HackKU2019
                 };
 
                 var model = new ResultsModel {User = checkedUser, Tweets = twitterContents};
-
-                if (options.Equals("asc_time"))
-                {
-                    model.Tweets.Reverse();
-                }
-                else if (options.Equals("desc_severity"))
-                {
-                    model.Tweets = model.Tweets.OrderByDescending(n => n.TotalFlags).ToList();
-                } 
-                else if (options.Equals("asc_severity"))
-                {
-                    model.Tweets = model.Tweets.OrderBy(n => n.TotalFlags).ToList();
-                }
-
                 return model;
             }
 
