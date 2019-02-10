@@ -10,15 +10,22 @@ namespace HackKU2019.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string twitter = null, string facebook = null, string instagram = null)
+        public IActionResult Index(string twitter = null)
         {
             if (twitter != null)
             {
-                var model = new GetTweets().PullTweets(twitter);
-                var analyzer = new ContentAnalyzer();
-                analyzer.AnalyzeContent(model.User);
-                return View(model);
-            }
+                try
+                {
+                    var model = new GetTweets().PullTweets(twitter);
+                    var analyzer = new ContentAnalyzer();
+                    analyzer.AnalyzeContent(model.User);
+                    return View(model);
+                }
+                catch (Exception exception)
+                {
+                    return View(new ResultsModel { Error = "User not found or access denied.", User = new MainUser { UserInfo = new User { UserId = twitter }} });
+                }
+             }
             
             return View();
         }
