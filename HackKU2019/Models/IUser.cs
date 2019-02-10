@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using InstaSharp.Endpoints;
+using Tweetinvi.Core.Extensions;
 
 namespace HackKU2019.Models
 {
@@ -10,7 +13,8 @@ namespace HackKU2019.Models
        public List<Followed> Following { get; set; }
        public List<Tweets> Tweets { get; set; }
        public string Issues { get; set; }
-       public int TotalFlags { get; set; }
+       public List<string> IssueList => Issues.Split(". ").Distinct().Where(n => n.Length > 0).ToList();
+       public int TotalFlags => IssueList.Count;
     }
     public class User
     {
@@ -43,7 +47,8 @@ namespace HackKU2019.Models
         public List<string> MediaUrls { get; set; }
         public User UserCreateBy{ get; set; }
         public string Issue{ get; set; }
-        public int TotalFlags { get; set; }
+        public List<string> IssueList => Issue.Split(". ").Distinct().Where(n => n.Length > 0).ToList();
+        public int TotalFlags => IssueList.Count;
         public long Id { get; set; }
     }
 }
