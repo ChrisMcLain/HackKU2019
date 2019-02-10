@@ -65,7 +65,7 @@
 
     <div class="row justify-content-center">
         <div class="col-4" align="center">
-            <button type="submit" class="btn btn-success btn-lg" onclick="ViewLoadingFunction(); scrollFunction(); ">See Results</button>
+            <button type="submit" class="btn btn-success btn-lg" onclick="ViewLoadingFunction(); ">See Results</button>
             <div class="padding"></div>
         </div>
     </div>
@@ -87,7 +87,7 @@
     else
     {
         var color = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
-        <div class="row" id="results" onload="scrollFunction()">
+        <div class="row" id="results" >
             <div class="col-12">
                 <div class="row align-items-center">
                     <div class="col-6" align="right">
@@ -161,7 +161,6 @@
                 
             </div>
         </div>
-        <div onload="scrollFunction"></div>
     }
 }
 
@@ -172,10 +171,5 @@ function ViewLoadingFunction() {
 
 }
 
-    function scrollFunction() {
-        var elmnt = document.getElementById("results");
-        setTimeout(function () {
-            elmnt.scrollIntoView();
-        }, 1000);
-  }
+  
 </script>
