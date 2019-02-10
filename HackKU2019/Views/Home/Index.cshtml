@@ -60,7 +60,7 @@
     else
     {
         var color = Model.User.TotalFlags > 2 ? "red" : Model.User.TotalFlags > 1 ? "orange" : "yellow";
-        <div class="row" id="results">
+        <div class="row" id="results" onload="scrollFunction()">
             <div class="col-12">
                 <div class="row align-items-center">
                     <div class="col-6" align="right">
@@ -97,7 +97,7 @@
                     color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
                     if (tweet.TotalFlags > 0)
                     {
-                        <div class="row align-items-center">
+                        <div class="row align-items-center" >
                             <div class="col-6" align="right">
                                 <div class="card @*@(color)_cards*@">
                                     @foreach (var media in tweet.MediaUrls)
@@ -132,37 +132,6 @@
                     }
                 }
             </div>
-
-            @*@if (Model != null)
-            {
-                <div class="col-6 background_twitter">
-                    <div class="card">
-                        <div class="card-body">
-                            @Model.User.TotalFlags
-                        </div>
-                    </div>
-
-                    @foreach (var tweet in Model.User.Tweets)
-                    {
-                        var color = tweet.TotalFlags > 2 ? "red" : tweet.TotalFlags > 1 ? "orange" : "yellow";
-                        if (tweet.TotalFlags > 0)
-                        {
-                            <div class="small_padding"></div>
-                            <div class="card @(color)_cards">
-                                <div class="card-body">
-                                    <strong>@tweet.TotalFlags Flags</strong>
-                                    <br/>
-                                    <em>@tweet.Issue</em>
-                                    <hr/>
-                                    <strong>Tweet Content</strong>
-                                    <br/>
-                                    @tweet.Text
-                                </div>
-                            </div>
-                        }
-                    }
-                </div>
-            }*@
         </div>
     }
 }
