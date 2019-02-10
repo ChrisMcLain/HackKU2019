@@ -9,4 +9,4 @@
 #### After picking a user
 ![](images/Socialyzer.PNG?raw=true)
 #### Picking an invalid user
-![](images/Socialyzer-Bad.PNG?raw=true)
+![](images/Socialyzerbad.png?raw=true)
