@@ -108,6 +108,33 @@ namespace HackKU2019
                 }
             }
 
+            SafeSearchAnnotation sSA=client.DetectSafeSearch(image);
+            if (Convert.ToInt16(sSA.Racy)>3)
+            {
+                flags += 1;
+                issues += "Possibly racy image. ";
+            }
+            if (Convert.ToInt16(sSA.Adult)>3)
+            {
+                flags += 1;
+                issues += "Possibly adult image. ";
+            }
+            if (Convert.ToInt16(sSA.Spoof)>3)
+            {
+                flags += 1;
+                issues += "Possibly spoof image. ";
+            }
+            if (Convert.ToInt16(sSA.Medical)>3)
+            {
+                //DO NOTHING because they are fine to have medical images
+               // flags += 1;
+               // issues += "Possibly medical image. ";
+            }
+            if (Convert.ToInt16(sSA.Violence)>3)
+            {
+                flags += 1;
+                issues += "Possibly violent image. ";
+            }
             IssueFlagsReturnObj returnObj = new IssueFlagsReturnObj {Flags = flags, Issue = issues};
             return returnObj;
         }
