@@ -50,5 +50,6 @@ namespace HackKU2019.Models
         public List<string> IssueList => Issue.Split(". ").Distinct().Where(n => n.Length > 0).ToList();
         public int TotalFlags => IssueList.Count;
         public long Id { get; set; }
+        public bool Translated{get;set;}
     }
 }

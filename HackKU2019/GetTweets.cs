@@ -58,11 +58,12 @@ namespace HackKU2019
                 if (tweets != null)
                 {
                     foreach (var tweet in tweets)
-                    {
+                    {   bool translated=false;
                         string languageOfTweet = DetectLanguage(tweet.Text);
                         if (languageOfTweet != "en")
                         {
                             tweet.Text = TranslateText(languageOfTweet, tweet.Text);
+                            translated=true;
                         }
                         List<string> mediaUrls = new List<string>();
                         try
@@ -94,7 +95,8 @@ namespace HackKU2019
                             },
                             Text = tweet.Text, Issue = "",
                             MediaUrls = mediaUrls,
-                            Id = tweet.Id
+                            Id = tweet.Id,
+                            Translated=translated
                         };
 
                         twitterContents.Add(thisTweet);
