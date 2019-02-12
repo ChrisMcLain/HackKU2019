@@ -71,7 +71,7 @@ namespace HackKU2019
                             foreach (var media in tweet.Media)
                             {
                                 //can't analyze videos using google cloud vision
-                                if (media.MediaType != MediaType.VideoMp4.ToString())
+                                if (media.MediaURL.EndsWith(".jpg"))
                                 {
                                     //Adds the links of all tweets images
                                     mediaUrls.Add(media.MediaURL);
